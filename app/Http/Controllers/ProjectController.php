@@ -3,24 +3,59 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\About;
+use App\Models\Skill;
+use App\Models\Certificate;
+use App\Models\Experience;
+use App\Models\Message;
+use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
-    // Menampilkan halaman depan portfolio
+    // Menampilkan halaman depan portfolio (User Index)
     public function index() 
     {
-        $projects = Project::all(); 
-        
-        return view('user.index', compact('projects')); 
+        $profile      = Profile::first();
+        $projects     = Project::all(); 
+        $certificates = Certificate::all(); 
+        $skills       = Skill::all(); 
+        $experiences  = Experience::all();
+        $messages     = Message::latest()->get();
+        $abouts       = About::all();
+
+        return view('user.index', compact(
+            'profile', 
+            'projects', 
+            'certificates', 
+            'skills', 
+            'experiences', 
+            'messages', 
+            'abouts'
+        )); 
     }
 
-    // Menampilkan halaman kelola data setelah sukses login
+    // Menampilkan halaman kelola data setelah sukses login (Admin Dashboard)
     public function dashboard()
     {
-        $projects = Project::all(); 
-        return view('projects.index', compact('projects')); 
+        $profile      = Profile::first(); 
+        $projects     = Project::all(); 
+        $certificates = Certificate::all(); 
+        $skills       = Skill::all(); 
+        $experiences  = Experience::all();
+        $messages     = Message::latest()->get();
+        $abouts       = About::all();
+
+        return view('projects.index', compact(
+            'profile', 
+            'projects', 
+            'certificates', 
+            'skills', 
+            'experiences', 
+            'messages', 
+            'abouts'
+        ));
     }
 
     public function destroy($id) 
