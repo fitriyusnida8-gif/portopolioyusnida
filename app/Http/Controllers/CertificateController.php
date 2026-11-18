@@ -25,7 +25,7 @@ class CertificateController extends Controller
         Certificate::create($data);
 
         // Mengarahkan kembali ke dashboard bagian #certificates
-        return redirect()->to(route('dashboard') . '#certificates')->with('success', 'Sertifikat berhasil ditambahkan!');
+        return redirect()->to(route('dashboard') . '#prestasi')->with('success', 'Sertifikat berhasil ditambahkan!');
     }
 
     public function edit($id)
@@ -56,7 +56,7 @@ class CertificateController extends Controller
         $certificate->update($data);
 
         // Mengarahkan ke dashboard bagian #certificates setelah update
-        return redirect()->to(route('dashboard') . '#certificates')->with('success', 'Sertifikat berhasil diperbarui!');
+        return redirect()->to(route('dashboard') . '#prestasi')->with('success', 'Sertifikat berhasil diperbarui!');
     }
 
     public function destroy($id)
@@ -70,6 +70,6 @@ class CertificateController extends Controller
         $certificate->delete();
 
         // Mengarahkan kembali ke dashboard bagian #certificates setelah hapus
-        return redirect()->to(route('dashboard') . '#certificates')->with('success', 'Sertifikat berhasil dihapus!');
+        return redirect()->to(route('dashboard') . '#prestasi')->with('success', 'Sertifikat berhasil dihapus!');
     }
 }
