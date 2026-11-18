@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('period'); // Untuk bulan/tahun (Contoh: Januari - Maret 2025)
             $table->string('title');  // Untuk judul pengalaman
             $table->text('description'); // Untuk deskripsi
+            $table->string('image')->nullable(); // Simpan nama file gambar
             $table->timestamps();
         });
     }

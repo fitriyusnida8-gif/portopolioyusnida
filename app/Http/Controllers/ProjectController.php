@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Project;
-use App\Models\About;
-use App\Models\Skill;
-use App\Models\Certificate;
-use App\Models\Experience;
-use App\Models\Message;
-use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Profile;
+use App\Models\Certificate;
+use App\Models\Skill;
+use App\Models\Experience;
+use App\Models\Message;
+use App\Models\About;
+use App\Models\Project;
 
 class ProjectController extends Controller
 {
@@ -24,7 +24,7 @@ class ProjectController extends Controller
         $messages     = Message::latest()->get();
         $abouts       = About::all();
 
-        // Query untuk pencarian dan filter pada sisi user (jika ada)
+        // Query untuk pencarian dan filter pada sisi user
         $query = Project::query();
 
         if ($request->has('search') && $request->search != '') {
@@ -35,21 +35,23 @@ class ProjectController extends Controller
             });
         }
 
+        // Filter berdasarkan teknologi
         if ($request->has('tech') && $request->tech != '') {
             $query->where('technologies', 'like', "%{$request->tech}%");
         }
 
         $projects = $query->latest()->get();
 
+        // Kirim semua variabel ke view user.index (tanpa contacts)
         return view('user.index', compact(
             'profile', 
             'projects', 
             'certificates', 
             'skills', 
             'experiences', 
-            'messages', 
+            'messages',
             'abouts'
-        )); 
+        ));
     }
 
     // Menampilkan halaman kelola data setelah sukses login (Admin Dashboard)
@@ -90,20 +92,6 @@ class ProjectController extends Controller
         ));
     }
 
-    public function destroy($id) 
-    {
-        $project = Project::findOrFail($id);
-        
-        // Hapus file gambar jika ada
-        if ($project->image && Storage::disk('public')->exists($project->image)) {
-            Storage::disk('public')->delete($project->image);
-        }
-
-        $project->delete();
-        
-        return redirect()->route('dashboard')->with('success', 'Project berhasil dihapus!');
-    }
-
     public function store(Request $request) 
     {
         $request->validate([
@@ -116,7 +104,7 @@ class ProjectController extends Controller
             'features'      => 'nullable|string',
             'process_docs'  => 'nullable|string',
             'user_feedback' => 'nullable|string',
-            'image'         => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
+            'image'         => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048', 
         ]);
 
         $data = $request->except(['image', '_token']);
@@ -128,7 +116,7 @@ class ProjectController extends Controller
 
         Project::create($data);
 
-        return redirect()->route('dashboard')->with('success', 'Project berhasil ditambahkan!');
+        return redirect()->to(route('dashboard') . '#projects')->with('success', 'Project berhasil ditambahkan!');
     }
 
     public function edit($id) 
@@ -151,7 +139,7 @@ class ProjectController extends Controller
             'features'      => 'nullable|string',
             'process_docs'  => 'nullable|string',
             'user_feedback' => 'nullable|string',
-            'image'         => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image'         => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
         $data = $request->except(['image', '_token', '_method']);
@@ -166,6 +154,19 @@ class ProjectController extends Controller
 
         $project->update($data);
 
-        return redirect()->route('dashboard')->with('success', 'Project berhasil diperbarui!');
+        return redirect()->to(route('dashboard') . '#projects')->with('success', 'Project berhasil diperbarui!');
+    }
+
+    public function destroy($id)
+    {
+        $project = Project::findOrFail($id);
+
+        if ($project->image && Storage::disk('public')->exists($project->image)) {
+            Storage::disk('public')->delete($project->image);
+        }
+
+        $project->delete();
+
+        return redirect()->to(route('dashboard') . '#projects')->with('success', 'Project berhasil dihapus!');
     }
 }

@@ -13,12 +13,25 @@
     <div class="max-w-xl mx-auto bg-white dark:bg-gray-950 rounded-3xl p-8 border border-rose-100 dark:border-gray-800 shadow-lg">
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold text-rose-600">Edit Pengalaman</h2>
-            <a href="{{ route('dashboard') }}" class="text-sm text-gray-500 hover:text-rose-600 transition">
+            <a href="{{ route('dashboard') }}#experience" class="text-sm text-gray-500 hover:text-rose-600 transition">
                 <i class="fa-solid fa-arrow-left mr-1"></i> Kembali
             </a>
         </div>
 
-        <form action="{{ route('experiences.update', $experience->id) }}" method="POST" class="space-y-5">
+        <!-- Penampil Error Validasi -->
+        @if ($errors->any())
+            <div class="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-xl text-xs">
+                <p class="font-bold mb-1">Gagal menyimpan perubahan:</p>
+                <ul class="list-disc pl-5 space-y-1">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <!-- PENTING: Tambahkan enctype="multipart/form-data" agar file gambar terkirim -->
+        <form action="{{ route('experiences.update', $experience->id) }}" method="POST" enctype="multipart/form-data" class="space-y-5">
             @csrf
             @method('PUT')
 
@@ -30,6 +43,21 @@
             <div>
                 <label class="block text-sm font-semibold mb-2">Judul Pengalaman / Posisi</label>
                 <input type="text" name="title" value="{{ old('title', $experience->title) }}" required class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold mb-2">Ganti / Upload Gambar (Opsional)</label>
+                
+                <!-- Tampilkan gambar saat ini jika ada -->
+                @if($experience->image)
+                <div class="mb-3">
+                    <p class="text-xs text-gray-400 mb-1">Gambar saat ini:</p>
+                    <img src="{{ asset('storage/' . $experience->image) }}" alt="{{ $experience->title }}" class="w-32 h-20 object-cover rounded-lg border border-rose-100 dark:border-gray-800">
+                </div>
+                @endif
+
+                <input type="file" name="image" accept="image/*" class="w-full px-4 py-2 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-rose-600 hover:file:bg-rose-100">
+                <p class="text-xs text-gray-400 mt-1">Biarkan kosong jika tidak ingin mengubah gambar.</p>
             </div>
 
             <div>

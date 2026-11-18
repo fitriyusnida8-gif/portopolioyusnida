@@ -17,7 +17,7 @@ class SkillController extends Controller
 
         Skill::create($request->all());
 
-        return redirect()->back()->with('success', 'Skill berhasil ditambahkan!');
+        return redirect()->to(route('dashboard') . '#skills')->with('success', 'Skill berhasil ditambahkan!');
     }
 
     public function edit($id)
@@ -38,7 +38,8 @@ class SkillController extends Controller
 
         $skill->update($request->all());
 
-        return redirect()->route('dashboard')->with('success', 'Skill berhasil diperbarui!');
+        // Diperbaiki agar redirect beserta hash #skills berada di dalam satu perintah
+        return redirect()->to(route('dashboard') . '#skills')->with('success', 'Skill berhasil diperbarui!');
     }
 
     public function destroy($id)
@@ -46,6 +47,6 @@ class SkillController extends Controller
         $skill = Skill::findOrFail($id);
         $skill->delete();
 
-        return redirect()->back()->with('success', 'Skill berhasil dihapus!');
+        return redirect()->to(route('dashboard') . '#skills')->with('success', 'Skill berhasil dihapus!');
     }
 }

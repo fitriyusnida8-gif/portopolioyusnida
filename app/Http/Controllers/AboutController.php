@@ -4,21 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\About;
+use Illuminate\Support\Facades\Storage;
 
 class AboutController extends Controller
 {
     public function store(Request $request)
     {
         $request->validate([
-    'category' => 'required|in:Biodata Singkat,Pendidikan,Minat & Teknologi,Pengalaman PKL,Cita-cita',
-    'title' => 'nullable|string|max:255', // title dibuat nullable agar untuk biodata singkat tidak wajib diisi judul
-    'year' => 'nullable|string|max:255',
-    'description' => 'nullable|string',
-]);
+            'category' => 'required|in:Biodata Singkat,Pendidikan,Minat & Teknologi,Hobi,Cita-cita',
+            'title' => 'nullable|string|max:255', 
+            'year' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ]);
 
-        About::create($request->all());
+        $data = $request->except('image');
 
-        return redirect()->back()->with('success', 'Data About Me berhasil ditambahkan!');
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('abouts', 'public');
+        }
+
+        About::create($data);
+
+        return redirect()->to(route('dashboard') . '#about')->with('success', 'Data About Me berhasil ditambahkan!');
     }
 
     public function edit($id)
@@ -32,22 +40,37 @@ class AboutController extends Controller
         $about = About::findOrFail($id);
 
         $request->validate([
-            'category' => 'required|in:Pendidikan,Minat & Karir,Pengalaman PKL,Cita-cita',
-            'title' => 'required|string|max:255',
+            'category' => 'required|in:Biodata Singkat,Pendidikan,Minat & Teknologi,Hobi,Cita-cita',
+            'title' => 'nullable|string|max:255',
             'year' => 'nullable|string|max:255',
             'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
-        $about->update($request->all());
+        $data = $request->except('image');
 
-        return redirect()->route('dashboard')->with('success', 'Data About Me berhasil diperbarui!');
+        if ($request->hasFile('image')) {
+            if ($about->image && Storage::disk('public')->exists($about->image)) {
+                Storage::disk('public')->delete($about->image);
+            }
+            $data['image'] = $request->file('image')->store('abouts', 'public');
+        }
+
+        $about->update($data);
+
+        return redirect()->to(route('dashboard') . '#about')->with('success', 'Data About Me berhasil diperbarui!');
     }
 
     public function destroy($id)
     {
         $about = About::findOrFail($id);
+
+        if ($about->image && Storage::disk('public')->exists($about->image)) {
+            Storage::disk('public')->delete($about->image);
+        }
+
         $about->delete();
 
-        return redirect()->back()->with('success', 'Data About Me berhasil dihapus!');
+        return redirect()->to(route('dashboard') . '#about')->with('success', 'Data About Me berhasil dihapus!');
     }
 }

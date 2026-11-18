@@ -143,101 +143,120 @@
 </section>
 
     <!-- SECTION: ABOUT ME -->
-    <section id="about" class="bg-white dark:bg-gray-950 px-6 md:px-20 py-20">
-        <div class="max-w-4xl mx-auto">
-            <div class="flex flex-col md:flex-row items-center justify-between mb-10 gap-4">
-                <div class="flex items-center space-x-4 w-full">
-                    <h2 class="text-2xl sm:text-3xl font-bold italic">About Me</h2>
-                    <div class="h-[2px] bg-gradient-to-r from-rose-500 to-transparent flex-grow max-w-xs"></div>
-                </div>
-                <a href="#form-about" class="bg-rose-600 hover:bg-rose-700 text-white px-6 py-2.5 rounded-full font-semibold shadow-md transition-all text-sm whitespace-nowrap">
-                    <i class="fa-solid fa-plus mr-2"></i>Tambah Info
-                </a>
+<section id="about" class="bg-white dark:bg-gray-950 px-6 md:px-20 py-20">
+    <div class="max-w-4xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center justify-between mb-10 gap-4">
+            <div class="flex items-center space-x-4 w-full">
+                <h2 class="text-2xl sm:text-3xl font-bold italic">About Me</h2>
+                <div class="h-[2px] bg-gradient-to-r from-rose-500 to-transparent flex-grow max-w-xs"></div>
             </div>
+            <a href="#form-about" class="bg-rose-600 hover:bg-rose-700 text-white px-6 py-2.5 rounded-full font-semibold shadow-md transition-all text-sm whitespace-nowrap">
+                <i class="fa-solid fa-plus mr-2"></i>Tambah Info
+            </a>
+        </div>
 
-            <div class="mb-8 space-y-4">
-                @forelse($abouts->where('category', 'Biodata Singkat') as $bio)
-                <div class="bg-rose-50/40 dark:bg-gray-900 p-6 sm:p-8 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm relative group">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 gap-2">
-                        <h3 class="text-lg sm:text-xl font-bold text-rose-600 flex items-center gap-2">
-                            <i class="fa-solid fa-user-pen"></i> {{ $bio->title ?: 'Biodata Singkat' }}
-                        </h3>
-                        <div class="flex items-center gap-2">
-                            <a href="{{ route('abouts.edit', $bio->id) }}" class="text-amber-500 hover:text-amber-600 text-xs font-semibold px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-gray-800 transition"><i class="fa-solid fa-pen"></i> Edit</a>
-                            <form action="{{ route('abouts.destroy', $bio->id) }}" method="POST" onsubmit="return confirm('Hapus biodata ini?')">
-                                @csrf @method('DELETE')
-                                <button type="submit" class="text-red-500 hover:text-red-600 text-xs font-semibold px-3 py-1.5 rounded-xl bg-red-50 dark:bg-gray-800 transition"><i class="fa-solid fa-trash"></i> Hapus</button>
-                            </form>
-                        </div>
-                    </div>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-sm sm:text-base">{{ $bio->description }}</p>
-                </div>
-                @empty
-                <div class="bg-rose-50/20 dark:bg-gray-900 p-6 rounded-3xl border border-dashed border-rose-200 dark:border-gray-800 text-center">
-                    <p class="text-gray-400 text-sm italic">Belum ada Biodata Singkat.</p>
-                </div>
-                @endforelse
-            </div>
-
-            <!-- Riwayat Pendidikan -->
-            <div class="mb-12 bg-gray-50 dark:bg-gray-900 p-6 sm:p-8 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm">
-                <h3 class="text-lg sm:text-xl font-bold mb-6 text-rose-600 flex items-center gap-2"><i class="fa-solid fa-graduation-cap"></i> Riwayat Pendidikan</h3>
-                <div class="relative border-l-2 border-rose-200 dark:border-gray-700 ml-4 space-y-8">
-                    @forelse($abouts->where('category', 'Pendidikan') as $edu)
-                    <div class="relative pl-6 group">
-                        <div class="absolute -left-[9px] top-1.5 w-4 h-4 bg-rose-600 rounded-full border-4 border-white dark:border-gray-900"></div>
-                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center">
-                            <div>
-                                <h4 class="text-sm sm:text-base font-bold text-gray-900 dark:text-white">{{ $edu->title }}</h4>
-                                @if($edu->year)<span class="text-xs font-semibold text-rose-500">{{ $edu->year }}</span>@endif
-                            </div>
-                            <div class="mt-2 sm:mt-0 flex items-center gap-2">
-                                <a href="{{ route('abouts.edit', $edu->id) }}" class="text-amber-500 hover:text-amber-600 text-xs font-semibold px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-gray-800 transition">Edit</a>
-                                <form action="{{ route('abouts.destroy', $edu->id) }}" method="POST" onsubmit="return confirm('Hapus riwayat pendidikan ini?')">
-                                    @csrf @method('DELETE')
-                                    <button type="submit" class="text-red-500 hover:text-red-600 text-xs font-semibold px-2.5 py-1 rounded-lg bg-red-50 dark:bg-gray-800 transition">Hapus</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    @empty
-                    <p class="text-gray-400 text-sm italic pl-6">Belum ada riwayat pendidikan.</p>
-                    @endforelse
-                </div>
-            </div>
-
-            <!-- Minat, PKL, & Cita-Cita -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                @forelse($abouts->whereNotIn('category', ['Biodata Singkat', 'Pendidikan']) as $item)
-                <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-xs font-bold text-rose-600 uppercase tracking-wider bg-rose-100 dark:bg-gray-800 px-3 py-1 rounded-full">{{ $item->category }}</span>
-                            @if($item->year)<span class="text-xs font-semibold text-gray-400">{{ $item->year }}</span>@endif
-                        </div>
-                        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mt-2">{{ $item->title }}</h3>
-                        @if($item->description)<p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mt-2 leading-relaxed">{{ $item->description }}</p>@endif
-                    </div>
-                    <div class="mt-6 pt-4 border-t border-rose-100 dark:border-gray-800 flex items-center gap-3">
-                        <a href="{{ route('abouts.edit', $item->id) }}" class="flex-1 text-center bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold py-2 rounded-xl transition">Edit</a>
-                        <form action="{{ route('abouts.destroy', $item->id) }}" method="POST" class="flex-1" onsubmit="return confirm('Hapus data ini?')">
+        <div class="mb-8 space-y-4">
+            @forelse($abouts->where('category', 'Biodata Singkat') as $bio)
+            <div class="bg-rose-50/40 dark:bg-gray-900 p-6 sm:p-8 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm relative group">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 gap-2">
+                    <h3 class="text-lg sm:text-xl font-bold text-rose-600 flex items-center gap-2">
+                        <i class="fa-solid fa-user-pen"></i> {{ $bio->title ?: 'Biodata Singkat' }}
+                    </h3>
+                    <div class="flex items-center gap-2">
+                        <a href="{{ route('abouts.edit', $bio->id) }}" class="text-amber-500 hover:text-amber-600 text-xs font-semibold px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-gray-800 transition"><i class="fa-solid fa-pen"></i> Edit</a>
+                        <form action="{{ route('abouts.destroy', $bio->id) }}" method="POST" onsubmit="return confirm('Hapus biodata ini?')">
                             @csrf @method('DELETE')
-                            <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold py-2 rounded-xl transition">Delete</button>
+                            <button type="submit" class="text-red-500 hover:text-red-600 text-xs font-semibold px-3 py-1.5 rounded-xl bg-red-50 dark:bg-gray-800 transition"><i class="fa-solid fa-trash"></i> Hapus</button>
                         </form>
                     </div>
                 </div>
+
+                @if($bio->image)
+                <div class="mb-4 overflow-hidden rounded-xl border border-rose-100 dark:border-gray-800">
+                    <img src="{{ asset('storage/' . $bio->image) }}" alt="{{ $bio->title }}" class="w-full max-h-60 object-cover">
+                </div>
+                @endif
+
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-sm sm:text-base">{{ $bio->description }}</p>
+            </div>
+            @empty
+            <div class="bg-rose-50/20 dark:bg-gray-900 p-6 rounded-3xl border border-dashed border-rose-200 dark:border-gray-800 text-center">
+                <p class="text-gray-400 text-sm italic">Belum ada Biodata Singkat.</p>
+            </div>
+            @endforelse
+        </div>
+
+        <!-- Riwayat Pendidikan -->
+        <div class="mb-12 bg-gray-50 dark:bg-gray-900 p-6 sm:p-8 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm">
+            <h3 class="text-lg sm:text-xl font-bold mb-6 text-rose-600 flex items-center gap-2"><i class="fa-solid fa-graduation-cap"></i> Riwayat Pendidikan</h3>
+            <div class="relative border-l-2 border-rose-200 dark:border-gray-700 ml-4 space-y-8">
+                @forelse($abouts->where('category', 'Pendidikan') as $edu)
+                <div class="relative pl-6 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 bg-rose-600 rounded-full border-4 border-white dark:border-gray-900"></div>
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+                        <div>
+                            <h4 class="text-sm sm:text-base font-bold text-gray-900 dark:text-white">{{ $edu->title }}</h4>
+                            @if($edu->year)<span class="text-xs font-semibold text-rose-500">{{ $edu->year }}</span>@endif
+                        </div>
+                        <div class="mt-2 sm:mt-0 flex items-center gap-2">
+                            <a href="{{ route('abouts.edit', $edu->id) }}" class="text-amber-500 hover:text-amber-600 text-xs font-semibold px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-gray-800 transition">Edit</a>
+                            <form action="{{ route('abouts.destroy', $edu->id) }}" method="POST" onsubmit="return confirm('Hapus riwayat pendidikan ini?')">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="text-red-500 hover:text-red-600 text-xs font-semibold px-2.5 py-1 rounded-lg bg-red-50 dark:bg-gray-800 transition">Hapus</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 @empty
+                <p class="text-gray-400 text-sm italic pl-6">Belum ada riwayat pendidikan.</p>
                 @endforelse
             </div>
         </div>
-    </section>
 
-    <!-- FORM INPUT ABOUT ME BARU -->
+        <!-- Minat, Hobi, & Cita-Cita -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            @forelse($abouts->whereNotIn('category', ['Biodata Singkat', 'Pendidikan']) as $item)
+            <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xs font-bold text-rose-600 uppercase tracking-wider bg-rose-100 dark:bg-gray-800 px-3 py-1 rounded-full">{{ $item->category }}</span>
+                        @if($item->year)<span class="text-xs font-semibold text-gray-400">{{ $item->year }}</span>@endif
+                    </div>
+                    <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mt-2">{{ $item->title }}</h3>
+
+                    @if($item->image)
+                    <div class="mt-3 mb-2 overflow-hidden rounded-xl border border-rose-100 dark:border-gray-800">
+                        <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}" class="w-full max-h-48 object-cover">
+                    </div>
+                    @endif
+
+                    @if($item->description)<p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mt-2 leading-relaxed">{{ $item->description }}</p>@endif
+                </div>
+                <div class="mt-6 pt-4 border-t border-rose-100 dark:border-gray-800 flex items-center gap-3">
+                    <a href="{{ route('abouts.edit', $item->id) }}" class="flex-1 text-center bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold py-2 rounded-xl transition">Edit</a>
+                    <form action="{{ route('abouts.destroy', $item->id) }}" method="POST" class="flex-1" onsubmit="return confirm('Hapus data ini?')">
+                        @csrf @method('DELETE')
+                        <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold py-2 rounded-xl transition">Delete</button>
+                    </form>
+                </div>
+            </div>
+            @empty
+            <div class="col-span-2 text-center py-6">
+                <p class="text-gray-400 text-sm italic">Belum ada data Minat, Hobi, atau Cita-cita.</p>
+            </div>
+            @endforelse
+        </div>
+    </div>
+</section>
+
+<!-- FORM INPUT ABOUT ME BARU -->
     <section id="form-about" class="py-16 px-6 bg-gray-50 dark:bg-gray-900">
         <div class="max-w-xl mx-auto">
-            <div class="text-center mb-10"><h2 class="text-xl sm:text-2xl font-bold mb-2">Form Tambah Info About Me</h2></div>
+            <div class="text-center mb-10">
+                <h2 class="text-xl sm:text-2xl font-bold mb-2">Form Tambah Info About Me</h2>
+            </div>
             <div class="bg-white dark:bg-gray-950 rounded-3xl p-6 sm:p-8 border border-rose-100 dark:border-gray-800 shadow-sm">
-                <form action="{{ route('abouts.store') }}" method="POST" class="space-y-5">
+                <form action="{{ route('abouts.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
                     @csrf
                     <div>
                         <label class="block text-sm font-semibold mb-2">Kategori</label>
@@ -245,23 +264,37 @@
                             <option value="Biodata Singkat">Biodata Singkat</option>
                             <option value="Pendidikan">Riwayat Pendidikan</option>
                             <option value="Minat & Teknologi">Minat & Bidang Teknologi</option>
-                            <option value="Pengalaman PKL">Pengalaman PKL</option>
+                            <option value="Hobi">Hobi</option>
                             <option value="Cita-cita">Cita-cita</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-semibold mb-2">Judul / Nama Sekolah / Minat</label>
-                        <input type="text" name="title" required placeholder="Contoh: SMKN 2 Banjarmasin / UI/UX Design" class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
+                        <label class="block text-sm font-semibold mb-2">Judul / Nama Sekolah / Minat / Hobi</label>
+                        <input type="text" name="title" placeholder="Contoh: Membaca / UI/UX Design" class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
                     </div>
                     <div>
                         <label class="block text-sm font-semibold mb-2">Tahun / Tanggal (Opsional)</label>
                         <input type="text" name="year" placeholder="Contoh: 2023 - 2026" class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
                     </div>
                     <div>
-                        <label class="block text-sm font-semibold mb-2">Deskripsi</label>
+                        <label class="block text-sm font-semibold mb-2">Upload Gambar / Foto (Opsional)</label>
+                        <input type="file" name="image" accept="image/*" class="w-full px-4 py-2 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-rose-600 hover:file:bg-rose-100">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Deskripsi (Opsional)</label>
                         <textarea name="description" rows="3" placeholder="Tuliskan deskripsi..." class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm"></textarea>
                     </div>
                     <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-3 rounded-xl transition shadow-md text-sm">Simpan Data</button>
+                    
+                    @if ($errors->any())
+                    <div class="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-xl text-xs">
+                        <ul class="list-disc pl-5 space-y-1">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                 </form>
             </div>
         </div>
@@ -483,64 +516,208 @@
         </div>
     </div>
 </section>
-
-    <!-- SECTION: EXPERIENCE (#experience) DENGAN CRUD LENGKAP -->
-    <section id="experience" class="py-20 px-6 md:px-20 bg-white dark:bg-gray-950">
-        <div class="max-w-4xl mx-auto">
-            <div class="mb-10 flex flex-col md:flex-row justify-between items-center gap-4">
-                <h2 class="text-2xl sm:text-3xl font-bold text-rose-600">Pengalaman & Experience</h2>
-                <a href="#form-experience" class="bg-rose-600 hover:bg-rose-700 text-white px-6 py-2.5 rounded-full font-semibold shadow-md transition-all text-sm">
-                    <i class="fa-solid fa-plus mr-2"></i>Tambah Experience
-                </a>
+<!-- FORM INPUT PROJECT BARU -->
+    <section id="form-project" class="fade-section py-20 px-6 bg-white dark:bg-gray-950">
+        <div class="max-w-3xl mx-auto bg-rose-50/40 dark:bg-gray-900 rounded-3xl p-6 sm:p-10 border border-rose-100 dark:border-gray-800 shadow-xl shadow-rose-100/20">
+            
+            <div class="text-center mb-8">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-2 text-rose-600">Form Tambah Project Baru</h2>
+                <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Masukkan portofolio atau project UKK baru dengan informasi lengkap di sini.</p>
             </div>
 
-            <div class="border-l-2 border-rose-200 dark:border-gray-800 ml-4 space-y-10 pl-6">
-                @forelse($experiences ?? [] as $experience)
-                <div class="relative bg-gray-50/50 dark:bg-gray-900/50 p-6 rounded-2xl border border-rose-100 dark:border-gray-800 shadow-sm group">
-                    <div class="absolute -left-[37px] top-6 w-4 h-4 bg-rose-600 rounded-full border-4 border-white dark:border-gray-950"></div>
-                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center">
-                        <div>
-                            <span class="text-xs font-semibold text-rose-500 uppercase tracking-wider">{{ $experience->period }}</span>
-                            <h3 class="text-base sm:text-lg font-bold mt-1">{{ $experience->title }}</h3>
-                        </div>
-                        <div class="mt-3 sm:mt-0 flex items-center gap-2">
-                            <a href="{{ route('experiences.edit', $experience->id) }}" class="text-amber-500 hover:text-amber-600 text-xs font-semibold px-3 py-1.5 rounded-lg bg-amber-50 dark:bg-gray-800 transition">
-                                <i class="fa-solid fa-pen"></i> Edit
-                            </a>
-                            <form action="{{ route('experiences.destroy', $experience->id) }}" method="POST" onsubmit="return confirm('Hapus experience ini?')">
-                                @csrf @method('DELETE')
-                                <button type="submit" class="text-red-500 hover:text-red-600 text-xs font-semibold px-3 py-1.5 rounded-lg bg-red-50 dark:bg-gray-800 transition">
-                                    <i class="fa-solid fa-trash"></i> Hapus
-                                </button>
-                            </form>
-                        </div>
+            <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
+                @csrf
+
+                <!-- 1. Judul Proyek -->
+                <div>
+                    <label for="judul" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Judul / Nama Proyek</label>
+                    <input type="text" name="title" id="judul" required
+                        class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 text-sm" 
+                        placeholder="Contoh: Website E-Commerce UKK PPLG">
+                </div>
+
+                <!-- 2. Gambar / Screenshot Aplikasi -->
+                <div>
+                    <label for="gambar" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Upload Gambar Screenshot Project</label>
+                    <input type="file" name="image" id="gambar" accept="image/*"
+                        class="w-full px-4 py-2 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-sm file:mr-4 file:py-1.5 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-rose-100 file:text-rose-700 hover:file:bg-rose-200">
+                </div>
+
+                <!-- 3. Deskripsi Proyek -->
+                <div>
+                    <label for="deskripsi" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Deskripsi Proyek</label>
+                    <textarea name="description" id="deskripsi" rows="3" required
+                        class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 text-sm" 
+                        placeholder="Tuliskan deskripsi singkat mengenai fitur dan fungsi project..."></textarea>
+                </div>
+
+                <!-- 4. Permasalahan yang ingin diselesaikan -->
+                <div>
+                    <label for="problem" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Permasalahan yang Ingin Diselesaikan</label>
+                    <input type="text" name="problem" id="problem"
+                        class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 text-sm" 
+                        placeholder="Contoh: Proses manual yang lambat dan sering tercecer...">
+                </div>
+
+                <!-- 5. Tujuan dibuatnya proyek -->
+                <div>
+                    <label for="objective" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Tujuan Proyek</label>
+                    <input type="text" name="objective" id="objective"
+                        class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 text-sm" 
+                        placeholder="Contoh: Membangun sistem digital yang cepat dan efisien...">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- 6. Teknologi yang digunakan -->
+                    <div>
+                        <label for="technologies" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Teknologi yang Digunakan</label>
+                        <input type="text" name="technologies" id="technologies" required
+                            class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 text-sm" 
+                            placeholder="Laravel, Tailwind CSS, MySQL...">
                     </div>
-                    <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-2">{{ $experience->description }}</p>
+
+                    <!-- 7. Peran dalam proyek -->
+                    <div>
+                        <label for="role" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Peran dalam Proyek</label>
+                        <input type="text" name="role" id="role"
+                            class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 text-sm" 
+                            placeholder="UI/UX Designer & Frontend...">
+                    </div>
                 </div>
-                @empty
-                <div class="text-center py-8 bg-gray-50 dark:bg-gray-900 rounded-2xl border border-dashed border-rose-200 dark:border-gray-800 p-6">
-                    <p class="text-gray-400 text-sm italic">Belum ada data pengalaman yang ditambahkan.</p>
+
+                <!-- 8. Fitur-Fitur dalam proyek -->
+                <div>
+                    <label for="features" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Fitur-Fitur Proyek</label>
+                    <textarea name="features" id="features" rows="2"
+                        class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 text-sm" 
+                        placeholder="Sebutkan fitur utama, pisahkan dengan koma..."></textarea>
                 </div>
-                @endforelse
-            </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- 9. Link Demo proyek -->
+                    <div>
+                        <label for="demo_url" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Link Demo Proyek</label>
+                        <input type="url" name="demo_url" id="demo_url"
+                            class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 text-sm" 
+                            placeholder="https://figma.com/...">
+                    </div>
+
+                    <!-- 10. Link Source Code GitHub -->
+                    <div>
+                        <label for="github_url" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Link Source Code GitHub</label>
+                        <input type="url" name="github_url" id="github_url"
+                            class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 text-sm" 
+                            placeholder="https://github.com/...">
+                    </div>
+                </div>
+
+                <!-- 11. Dokumentasi Proses Pekerjaan -->
+                <div>
+                    <label for="process_docs" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Dokumentasi Proses Pekerjaan</label>
+                    <input type="text" name="process_docs" id="process_docs"
+                        class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 text-sm" 
+                        placeholder="Contoh: Riset -> Wireframe -> High-Fi Design -> Testing...">
+                </div>
+
+                <!-- 12. Feedback User -->
+                <div>
+                    <label for="user_feedback" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Feedback User</label>
+                    <input type="text" name="user_feedback" id="user_feedback"
+                        class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 text-sm" 
+                        placeholder="Contoh: Desain sangat bersih dan mudah dipahami...">
+                </div>
+
+                <!-- Tombol Aksi -->
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-3 rounded-xl transition shadow-md shadow-rose-100 text-sm flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Simpan Project Baru
+                    </button>
+                </div>
+            </form>
         </div>
     </section>
 
-    <!-- FORM INPUT EXPERIENCE BARU -->
-    <section id="form-experience" class="py-16 px-6 bg-gray-50 dark:bg-gray-900">
-        <div class="max-w-xl mx-auto">
-            <div class="text-center mb-10"><h2 class="text-xl sm:text-2xl font-bold mb-2">Form Tambah Experience Baru</h2></div>
-            <div class="bg-white dark:bg-gray-950 rounded-3xl p-6 sm:p-8 border border-rose-100 dark:border-gray-800 shadow-sm">
-                <form action="{{ route('experiences.store') }}" method="POST" class="space-y-5">
-                    @csrf
-                    <div><label class="block text-sm font-semibold mb-2">Judul / Posisi Pengalaman</label><input type="text" name="title" required placeholder="Contoh: Peserta Magang / Developer" class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm"></div>
-                    <div><label class="block text-sm font-semibold mb-2">Periode / Tahun</label><input type="text" name="period" required placeholder="Contoh: Juli - Oktober 2025" class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm"></div>
-                    <div><label class="block text-sm font-semibold mb-2">Deskripsi</label><textarea name="description" rows="3" placeholder="Tuliskan detail pengalaman..." class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm"></textarea></div>
-                    <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-3 rounded-xl transition shadow-md text-sm">Simpan Experience</button>
-                </form>
-            </div>
+    
+<!-- SECTION: EXPERIENCE (#experience) DENGAN UPLOAD GAMBAR -->
+<section id="experience" class="py-20 px-6 md:px-20 bg-white dark:bg-gray-950">
+    <div class="max-w-4xl mx-auto">
+        <div class="mb-10 flex flex-col md:flex-row justify-between items-center gap-4">
+            <h2 class="text-2xl sm:text-3xl font-bold text-rose-600">Pengalaman & Experience</h2>
+            <a href="#form-experience" class="bg-rose-600 hover:bg-rose-700 text-white px-6 py-2.5 rounded-full font-semibold shadow-md transition-all text-sm">
+                <i class="fa-solid fa-plus mr-2"></i>Tambah Experience
+            </a>
         </div>
-    </section>
+
+        <div class="border-l-2 border-rose-200 dark:border-gray-800 ml-4 space-y-10 pl-6">
+            @forelse($experiences ?? [] as $experience)
+            <div class="relative bg-gray-50/50 dark:bg-gray-900/50 p-6 rounded-2xl border border-rose-100 dark:border-gray-800 shadow-sm group">
+                <div class="absolute -left-[37px] top-6 w-4 h-4 bg-rose-600 rounded-full border-4 border-white dark:border-gray-950"></div>
+                
+                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+                    <div>
+                        <span class="text-xs font-semibold text-rose-500 uppercase tracking-wider">{{ $experience->period }}</span>
+                        <h3 class="text-base sm:text-lg font-bold mt-1">{{ $experience->title }}</h3>
+                    </div>
+                    <div class="mt-3 sm:mt-0 flex items-center gap-2">
+                        <a href="{{ route('experiences.edit', $experience->id) }}" class="text-amber-500 hover:text-amber-600 text-xs font-semibold px-3 py-1.5 rounded-lg bg-amber-50 dark:bg-gray-800 transition">
+                            <i class="fa-solid fa-pen"></i> Edit
+                        </a>
+                        <form action="{{ route('experiences.destroy', $experience->id) }}" method="POST" onsubmit="return confirm('Hapus experience ini?')">
+                            @csrf @method('DELETE')
+                            <button type="submit" class="text-red-500 hover:text-red-600 text-xs font-semibold px-3 py-1.5 rounded-lg bg-red-50 dark:bg-gray-800 transition">
+                                <i class="fa-solid fa-trash"></i> Hapus
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Tampilkan Gambar jika ada -->
+                @if($experience->image)
+                <div class="mt-4 mb-3">
+                    <img src="{{ asset('storage/' . $experience->image) }}" alt="{{ $experience->title }}" class="w-full max-h-60 object-cover rounded-xl border border-rose-100 dark:border-gray-800">
+                </div>
+                @endif
+
+                <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-2">{{ $experience->description }}</p>
+            </div>
+            @empty
+            <div class="text-center py-8 bg-gray-50 dark:bg-gray-900 rounded-2xl border border-dashed border-rose-200 dark:border-gray-800 p-6">
+                <p class="text-gray-400 text-sm italic">Belum ada data pengalaman yang ditambahkan.</p>
+            </div>
+            @endforelse
+        </div>
+    </div>
+</section>
+
+<!-- FORM INPUT EXPERIENCE BARU -->
+<section id="form-experience" class="py-16 px-6 bg-gray-50 dark:bg-gray-900">
+    <div class="max-w-xl mx-auto">
+        <div class="text-center mb-10"><h2 class="text-xl sm:text-2xl font-bold mb-2">Form Tambah Experience Baru</h2></div>
+        <div class="bg-white dark:bg-gray-950 rounded-3xl p-6 sm:p-8 border border-rose-100 dark:border-gray-800 shadow-sm">
+            <!-- PENTING: Tambahkan enctype="multipart/form-data" -->
+            <form action="{{ route('experiences.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
+                @csrf
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Judul / Posisi Pengalaman</label>
+                    <input type="text" name="title" required placeholder="Contoh: Peserta Magang / Developer" class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Periode / Tahun</label>
+                    <input type="text" name="period" required placeholder="Contoh: Juli - Oktober 2025" class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Upload Gambar / Dokumentasi (Opsional)</label>
+                    <input type="file" name="image" accept="image/*" class="w-full px-4 py-2 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-rose-600 hover:file:bg-rose-100">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Deskripsi</label>
+                    <textarea name="description" rows="3" placeholder="Tuliskan detail pengalaman..." class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-3 rounded-xl transition shadow-md text-sm">Simpan Experience</button>
+            </form>
+        </div>
+    </div>
+</section>
 
     <!-- SECTION ADMIN: KELOLA CV DIGITAL -->
 <section id="cv" class="py-20 px-6 bg-rose-50/50 dark:bg-gray-900">
@@ -631,26 +808,29 @@
         </div>
     </section>
 
-    <!-- SECTION: CONTACT (#contact) -->
+    <!-- SECTION: CONTACT -->
     <section id="contact" class="py-20 px-6 text-center bg-gray-50 dark:bg-gray-950">
         <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl sm:text-4xl font-bold mb-12 tracking-tight">CONTACT</h2>
-            <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
-                <a href="mailto:fitriyusnida8@gmail.com" class="flex items-center space-x-3 bg-rose-600 text-white px-5 sm:px-7 py-3 rounded-xl hover:-translate-y-1 transition shadow-lg text-sm">
-                    <i class="fa-solid fa-envelope text-lg"></i>
+            <h2 class="text-4xl font-bold mb-12 tracking-tight">CONTACT</h2>
+            <div class="flex flex-wrap justify-center gap-6">
+                <!-- Email -->
+                <a href="mailto:fitriyusnida8@gmail.com" class="flex items-center space-x-3 bg-rose-600 text-white px-7 py-3 rounded-xl hover:-translate-y-1 transition shadow-lg">
+                    <i class="fa-solid fa-envelope text-xl"></i>
                     <span class="font-bold">Email</span>
                 </a>
-                <a href="https://github.com/fitriyusnida8-gif" target="_blank" class="flex items-center space-x-3 bg-gray-900 dark:bg-gray-800 text-white px-5 sm:px-7 py-3 rounded-xl hover:-translate-y-1 transition shadow-lg border border-gray-700 text-sm">
-                    <i class="fa-brands fa-github text-lg"></i>
+                <!-- GitHub -->
+                <a href="https://github.com/fitriyusnida8-gif" target="_blank" class="flex items-center space-x-3 bg-gray-900 dark:bg-gray-800 text-white px-7 py-3 rounded-xl hover:-translate-y-1 transition shadow-lg border border-gray-700">
+                    <i class="fa-brands fa-github text-xl"></i>
                     <span class="font-bold">GitHub</span>
                 </a>
-                <a href="https://instagram.com/fiidaysndaa" target="_blank" class="flex items-center space-x-3 bg-gradient-to-tr from-rose-400 via-pink-500 to-rose-600 text-white px-5 sm:px-7 py-3 rounded-xl hover:-translate-y-1 transition shadow-lg text-sm">
-                    <i class="fa-brands fa-instagram text-lg"></i>
+                <!-- Instagram -->
+                <a href="https://instagram.com/fiidaysndaa" target="_blank" class="flex items-center space-x-3 bg-gradient-to-tr from-rose-400 via-pink-500 to-rose-600 text-white px-7 py-3 rounded-xl hover:-translate-y-1 transition shadow-lg">
+                    <i class="fa-brands fa-instagram text-xl"></i>
                     <span class="font-bold">Instagram</span>
                 </a>
             </div>
         </div>
-    </section>
+    </section> 
 
     <!-- TOMBOL KEMBALI KE ATAS (BACK TO TOP) -->
     <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-6 right-6 bg-rose-600 text-white p-3.5 rounded-full shadow-lg hover:bg-rose-700 transition z-50">

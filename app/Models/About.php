@@ -13,6 +13,7 @@ class About extends Model
         'category',
         'title',
         'year',
+        'image',
         'description'
     ];
 }
