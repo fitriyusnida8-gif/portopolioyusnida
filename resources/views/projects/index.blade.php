@@ -81,51 +81,66 @@
         </ul>
     </div>
 
-    <!-- SECTION: HOME / BERANDA -->
-    <section class="flex flex-col md:flex-row items-center justify-center min-h-screen px-6 md:px-20 py-10">
-        <div class="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left">
-            <div class="mb-4 flex justify-center md:justify-start">
-                <a href="{{ route('profile.edit') }}" class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-sm">
-                    <i class="fa-solid fa-pen-to-square"></i> Edit Profil Beranda
-                </a>
-            </div>
-
-            <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold mt-2 tracking-tight uppercase">
-                {{ $profile->name ?? 'FITRI' }} <span class="text-rose-600">{{ Str::afterLast($profile->name ?? 'FITRI YUSNIDA', ' ') ?: 'YUSNIDA' }}</span>
-            </h1>
-            
-            <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-gray-700 dark:text-gray-300 mt-2 tracking-tight uppercase">
-                {{ $profile->class_name ?? 'XII-B' }} <span class="text-rose-600">{{ $profile->major ?? 'PENGEMBANGAN PERANGKAT LUNAK DAN GIM' }}</span>
-            </h2>
-
-            <p class="mt-4 text-gray-600 dark:text-gray-400 text-sm sm:text-base leading-relaxed">
-                {!! $profile->description ?? 'Siswi SMK dengan minat mendalam di bidang <strong>UI/UX Design</strong>. Fokus menciptakan desain antarmuka web dan aplikasi yang rapi, menarik, dan mudah digunakan.' !!}
-            </p>
-
-            <div class="mt-6 flex flex-wrap justify-center md:justify-start gap-2">
-                <span class="bg-rose-50 dark:bg-gray-800 text-rose-600 dark:text-rose-400 text-xs sm:text-sm font-semibold px-3 py-1 rounded-full border border-rose-200 dark:border-gray-700">
-                    {{ $profile->skill_badge ?? 'UI/UX Design' }}
-                </span>
-            </div>
-
-            <div class="mt-8 flex flex-wrap justify-center md:justify-start items-center gap-3 sm:gap-4">
-                <a href="#projects" class="bg-rose-600 text-white px-5 sm:px-6 py-3 rounded-full font-bold shadow-lg shadow-rose-200 dark:shadow-none hover:bg-rose-700 transition-all text-xs sm:text-base">
-                    Lihat Portfolio
-                </a>
-                <a href="#cv" class="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 px-5 sm:px-6 py-3 rounded-full font-bold hover:bg-gray-200 dark:hover:bg-gray-700 transition-all text-xs sm:text-base">
-                    Lihat CV
-                </a>
-                <a href="#contact" class="bg-rose-50 dark:bg-gray-800 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-gray-700 px-5 sm:px-6 py-3 rounded-full font-bold hover:bg-rose-100 dark:hover:bg-gray-700 transition-all text-xs sm:text-base flex items-center gap-1">
-                    Hubungi Saya &rarr;
-                </a>
-            </div>
+    <!-- SECTION: HOME / BERANDA (DENGAN TOMBOL EDIT & DESAIN MODERN) -->
+<section id="home" class="flex flex-col md:flex-row items-center justify-between min-h-screen px-6 md:px-20 py-20 overflow-hidden">
+    <div class="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left z-10">
+        
+        <!-- Tombol Edit Profil (Biasanya muncul jika admin login, atau sesuaikan kondisi auth-mu) -->
+        @auth
+        <div class="mb-4 flex justify-center md:justify-start">
+            <a href="{{ route('profile.edit') }}" class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-sm">
+                <i class="fa-solid fa-pen-to-square"></i> Edit Profil Beranda
+            </a>
         </div>
-            
-        <div class="w-full md:w-1/2 flex justify-center md:justify-end relative mt-10 md:mt-0">
-            <div class="absolute -inset-4 bg-rose-500/10 rounded-full blur-2xl"></div>
-            <img src="{{ isset($profile->image) ? asset('storage/' . $profile->image) : asset('images/saya1.jpg') }}" alt="Fitri Yusnida" class="relative w-64 sm:w-72 md:w-[420px] drop-shadow-2xl rounded-2xl border-4 border-white dark:border-gray-800 object-cover">
+        @endauth
+
+        <!-- Badge Status Available -->
+        <h1 class="text-3xl sm:text-5xl md:text-6xl font-black mt-2 tracking-tight uppercase leading-tight">
+            {{ $profile->name ?? 'FITRI' }} <span class="text-rose-600 dark:text-rose-500 underline decoration-rose-300 decoration-wavy decoration-1 underline-offset-8"></span>
+        </h1>
+        
+        <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-gray-700 dark:text-gray-300 mt-3 tracking-wide uppercase">
+            {{ $profile->class_name ?? 'XII-B' }} <span class="text-rose-600">•</span> {{ $profile->major ?? 'PENGEMBANGAN PERANGKAT LUNAK DAN GIM' }}
+        </h2>
+
+        <p class="mt-4 text-gray-600 dark:text-gray-400 text-sm sm:text-base leading-relaxed max-w-xl mx-auto md:mx-0">
+            {!! $profile->description ?? 'Siswi SMK dengan minat mendalam di bidang <strong>UI/UX Design</strong>. Fokus menciptakan desain antarmuka web dan aplikasi yang rapi, menarik, dan mudah digunakan.' !!}
+        </p>
+
+        <div class="mt-6 flex flex-wrap justify-center md:justify-start gap-2">
+            <span class="bg-rose-50 dark:bg-gray-800 text-rose-600 dark:text-rose-400 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-xl border border-rose-200 dark:border-gray-700 shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-wand-magic-sparkles text-rose-500"></i> {{ $profile->skill_badge ?? 'UI/UX Design' }}
+            </span>
         </div>
-    </section>
+
+        <div class="mt-8 flex flex-wrap justify-center md:justify-start items-center gap-3 sm:gap-4">
+            <a href="#projects" class="group bg-rose-600 hover:bg-rose-700 text-white px-5 sm:px-6 py-3.5 rounded-2xl font-bold shadow-lg shadow-rose-600/30 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 text-xs sm:text-base flex items-center gap-2">
+                <span>Lihat Portfolio</span>
+                <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+            </a>
+            
+            <a href="#cv" class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-800 px-5 sm:px-6 py-3.5 rounded-2xl font-bold hover:bg-gray-50 dark:hover:bg-gray-800 hover:-translate-y-0.5 transition-all duration-300 text-xs sm:text-base shadow-sm">
+                Lihat CV
+            </a>
+            
+            <a href="#contact" class="text-rose-600 dark:text-rose-400 hover:text-rose-700 font-bold px-3 py-3.5 text-xs sm:text-base flex items-center gap-1.5 transition group">
+                <span>Hubungi Saya</span>
+                <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </a>
+        </div>
+    </div>
+        
+    <div class="w-full md:w-1/2 flex justify-center md:justify-end relative mt-12 md:mt-0">
+        <!-- Background Glow Effect -->
+        <div class="absolute -inset-2 bg-gradient-to-r from-rose-500 to-pink-500 rounded-3xl blur-3xl opacity-20 dark:opacity-30 animate-pulse"></div>
+        
+        <div class="relative group">
+            <div class="absolute -inset-2 bg-gradient-to-tr from-rose-600 to-pink-400 rounded-3xl opacity-30 group-hover:opacity-60 transition duration-500 blur-sm"></div>
+            
+            <img src="{{ isset($profile->image) ? asset('storage/' . $profile->image) : asset('images/saya1.jpg') }}" alt="Fitri Yusnida" class="relative w-64 sm:w-72 md:w-[400px] h-auto drop-shadow-2xl rounded-3xl border-4 border-white dark:border-gray-900 object-cover transform group-hover:scale-[1.01] transition duration-500">
+        </div>
+    </div>
+</section>
 
     <!-- SECTION: ABOUT ME -->
     <section id="about" class="bg-white dark:bg-gray-950 px-6 md:px-20 py-20">
@@ -386,56 +401,88 @@
         </div>
     </section>
 
-    <!-- SECTION: PROJECTS -->
-    <section id="projects" class="py-20 px-6 bg-rose-50/30 dark:bg-gray-950">
-        <div class="max-w-6xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-4">
-                <h2 class="text-2xl sm:text-3xl font-bold text-rose-600">My Projects</h2>
-                <a href="#form-project" class="bg-rose-600 hover:bg-rose-700 text-white px-6 py-2.5 rounded-full font-semibold shadow-md transition-all text-sm"><i class="fa-solid fa-plus mr-2"></i>Tambah Project</a>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                @forelse($projects ?? [] as $project)
-                <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-md overflow-hidden border border-rose-100 dark:border-gray-800 flex flex-col justify-between h-full group">
-                    <div>
-                        <div class="h-52 overflow-hidden bg-rose-50 relative">
-                            @if($project->image)
-                                <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                            @else
-                                <div class="w-full h-full flex flex-col items-center justify-center text-rose-300">
-                                    <i class="fa-solid fa-image text-2xl"></i>
-                                    <span class="text-xs italic">No Image</span>
-                                </div>
-                            @endif
-                        </div>
-                        <div class="p-6 space-y-3">
-                            <h3 class="text-base sm:text-lg font-bold group-hover:text-rose-600 transition">{{ $project->title }}</h3>
-                            <p class="text-gray-500 dark:text-gray-400 text-xs sm:text-sm line-clamp-2">{{ $project->description }}</p>
-                            @if($project->technologies)
-                            <div class="flex flex-wrap gap-1.5 pt-1">
-                                @foreach(explode(',', $project->technologies) as $tech)
-                                    <span class="px-2.5 py-0.5 bg-rose-50 dark:bg-gray-800 text-rose-600 dark:text-rose-400 rounded-full text-xs font-medium">{{ trim($tech) }}</span>
-                                @endforeach
-                            </div>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="px-6 pb-6 pt-2 flex items-center gap-3 border-t border-rose-50 dark:border-gray-800">
-                        <a href="{{ route('projects.edit', $project->id) }}" class="flex-1 text-center bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold py-2.5 rounded-xl transition">Edit</a>
-                        <form action="{{ route('projects.destroy', $project->id) }}" method="POST" class="flex-1" onsubmit="return confirm('Hapus project ini?')">
-                            @csrf @method('DELETE')
-                            <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold py-2.5 rounded-xl transition">Delete</button>
-                        </form>
-                    </div>
-                </div>
-                @empty
-                <div class="col-span-full text-center py-16 bg-white dark:bg-gray-900 rounded-3xl border-2 border-dashed border-rose-200 dark:border-gray-800 p-8">
-                    <p class="text-gray-400 text-sm italic">Belum ada project yang ditambahkan.</p>
-                </div>
-                @endforelse
-            </div>
+    <!-- SECTION: PROJECTS (DENGAN PENCARIAN & FILTER) -->
+<section id="projects" class="py-20 px-6 bg-rose-50/30 dark:bg-gray-950">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header & Tombol Tambah -->
+        <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+            <h2 class="text-2xl sm:text-3xl font-bold text-rose-600">My Projects</h2>
+            <a href="#form-project" class="bg-rose-600 hover:bg-rose-700 text-white px-6 py-2.5 rounded-full font-semibold shadow-md transition-all text-sm">
+                <i class="fa-solid fa-plus mr-2"></i>Tambah Project
+            </a>
         </div>
-    </section>
+        
+        <!-- Form Pencarian & Filter -->
+        <form method="GET" action="{{ route('projects.index') }}" class="mb-10 bg-white dark:bg-gray-900 p-4 rounded-3xl shadow-sm border border-rose-100 dark:border-gray-800 flex flex-col sm:flex-row gap-4 items-center">
+            <!-- Input Cari -->
+            <div class="relative w-full flex-1">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
+                    <i class="fa-solid fa-search"></i>
+                </span>
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari judul atau deskripsi project..." class="w-full pl-11 pr-4 py-2.5 rounded-2xl border border-rose-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-950 text-sm focus:outline-none focus:border-rose-500">
+            </div>
+
+            <!-- Filter Teknologi -->
+            <div class="w-full sm:w-64">
+                <input type="text" name="tech" value="{{ request('tech') }}" placeholder="Filter teknologi (cth: Laravel)" class="w-full px-4 py-2.5 rounded-2xl border border-rose-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-950 text-sm focus:outline-none focus:border-rose-500">
+            </div>
+
+            <!-- Tombol Aksi -->
+            <div class="flex items-center gap-2 w-full sm:w-auto">
+                <button type="submit" class="flex-1 sm:flex-none bg-rose-600 hover:bg-rose-700 text-white px-5 py-2.5 rounded-2xl font-semibold text-sm transition shadow-sm">
+                    Filter
+                </button>
+                @if(request('search') || request('tech'))
+                    <a href="{{ route('projects.index') }}" class="flex-1 sm:flex-none bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 text-gray-600 dark:text-gray-300 px-4 py-2.5 rounded-2xl font-semibold text-sm transition text-center">
+                        Reset
+                    </a>
+                @endif
+            </div>
+        </form>
+
+        <!-- Grid Daftar Projects -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            @forelse($projects ?? [] as $project)
+            <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-md overflow-hidden border border-rose-100 dark:border-gray-800 flex flex-col justify-between h-full group">
+                <div>
+                    <div class="h-52 overflow-hidden bg-rose-50 relative">
+                        @if($project->image)
+                            <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        @else
+                            <div class="w-full h-full flex flex-col items-center justify-center text-rose-300">
+                                <i class="fa-solid fa-image text-2xl"></i>
+                                <span class="text-xs italic">No Image</span>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <h3 class="text-base sm:text-lg font-bold group-hover:text-rose-600 transition">{{ $project->title }}</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-xs sm:text-sm line-clamp-2">{{ $project->description }}</p>
+                        @if($project->technologies)
+                        <div class="flex flex-wrap gap-1.5 pt-1">
+                            @foreach(explode(',', $project->technologies) as $tech)
+                                <span class="px-2.5 py-0.5 bg-rose-50 dark:bg-gray-800 text-rose-600 dark:text-rose-400 rounded-full text-xs font-medium">{{ trim($tech) }}</span>
+                            @endforeach
+                        </div>
+                        @endif
+                    </div>
+                </div>
+                <div class="px-6 pb-6 pt-2 flex items-center gap-3 border-t border-rose-50 dark:border-gray-800">
+                    <a href="{{ route('projects.edit', $project->id) }}" class="flex-1 text-center bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold py-2.5 rounded-xl transition">Edit</a>
+                    <form action="{{ route('projects.destroy', $project->id) }}" method="POST" class="flex-1" onsubmit="return confirm('Hapus project ini?')">
+                        @csrf @method('DELETE')
+                        <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold py-2.5 rounded-xl transition">Delete</button>
+                    </form>
+                </div>
+            </div>
+            @empty
+            <div class="col-span-full text-center py-16 bg-white dark:bg-gray-900 rounded-3xl border-2 border-dashed border-rose-200 dark:border-gray-800 p-8">
+                <p class="text-gray-400 text-sm italic">Belum ada project yang ditemukan atau ditambahkan.</p>
+            </div>
+            @endforelse
+        </div>
+    </div>
+</section>
 
     <!-- SECTION: EXPERIENCE (#experience) DENGAN CRUD LENGKAP -->
     <section id="experience" class="py-20 px-6 md:px-20 bg-white dark:bg-gray-950">

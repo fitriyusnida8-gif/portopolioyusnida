@@ -15,15 +15,31 @@ use Illuminate\Support\Facades\Storage;
 class ProjectController extends Controller
 {
     // Menampilkan halaman depan portfolio (User Index)
-    public function index() 
+    public function index(Request $request) 
     {
         $profile      = Profile::first();
-        $projects     = Project::all(); 
         $certificates = Certificate::all(); 
         $skills       = Skill::all(); 
         $experiences  = Experience::all();
         $messages     = Message::latest()->get();
         $abouts       = About::all();
+
+        // Query untuk pencarian dan filter pada sisi user (jika ada)
+        $query = Project::query();
+
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->has('tech') && $request->tech != '') {
+            $query->where('technologies', 'like', "%{$request->tech}%");
+        }
+
+        $projects = $query->latest()->get();
 
         return view('user.index', compact(
             'profile', 
@@ -37,15 +53,31 @@ class ProjectController extends Controller
     }
 
     // Menampilkan halaman kelola data setelah sukses login (Admin Dashboard)
-    public function dashboard()
+    public function dashboard(Request $request)
     {
         $profile      = Profile::first(); 
-        $projects     = Project::all(); 
         $certificates = Certificate::all(); 
         $skills       = Skill::all(); 
         $experiences  = Experience::all();
         $messages     = Message::latest()->get();
         $abouts       = About::all();
+
+        // Fitur Pencarian & Filter untuk Admin Dashboard
+        $query = Project::query();
+
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->has('tech') && $request->tech != '') {
+            $query->where('technologies', 'like', "%{$request->tech}%");
+        }
+
+        $projects = $query->latest()->get();
 
         return view('projects.index', compact(
             'profile', 
