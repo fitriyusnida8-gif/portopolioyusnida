@@ -136,60 +136,18 @@
         </div>
     </section>
 
-    <!-- SECTION: ABOUT ME (Dinamis dari Abouts Admin) -->
-    <section id="about" class="bg-white dark:bg-gray-950 px-6 md:px-20 py-24">
-        <div class="max-w-4xl mx-auto">
-            <div class="flex items-center space-x-4 mb-10">
-                <h2 class="text-3xl font-bold italic">About Me</h2>
-                <div class="h-[2px] bg-gradient-to-r from-rose-500 to-transparent flex-grow max-w-xs"></div>
-            </div>
-
-            <!-- Biodata Singkat -->
-            <div class="mb-8 space-y-4">
-                @forelse($abouts->where('category', 'Biodata Singkat') as $bio)
-                <div class="bg-rose-50/40 dark:bg-gray-900 p-8 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm">
-                    <h3 class="text-xl font-bold text-rose-600 flex items-center gap-2 mb-3">
-                        <i class="fa-solid fa-user"></i> {{ $bio->title ?: 'Biodata Singkat' }}
-                    </h3>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-base sm:text-lg">
-                        {{ $bio->description }}
-                    </p>
-                </div>
-                @empty
-                <div class="bg-rose-50/40 dark:bg-gray-900 p-8 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm">
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-base sm:text-lg">
-                        Halo! Nama saya <span class="text-rose-600 font-semibold">Fitri Yusnida</span>, berdomisili di <span class="font-medium text-gray-800 dark:text-gray-200">Banjarmasin</span>. Saat ini saya menempuh pendidikan di <span class="font-semibold text-gray-900 dark:text-white">SMKN 2 Banjarmasin</span> pada jurusan <span class="text-rose-600 font-medium">Pengembangan Perangkat Lunak dan Gim (PPLG)</span>.
-                    </p>
-                </div>
-                @endforelse
-            </div>
-
-            <!-- Riwayat Pendidikan (Timeline) -->
-            <div class="mb-12 bg-gray-50 dark:bg-gray-900 p-8 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm">
-                <h3 class="text-xl font-bold mb-6 text-rose-600 flex items-center gap-2">
-                    <i class="fa-solid fa-graduation-cap"></i> Riwayat Pendidikan
-                </h3>
-                
-                <div class="relative border-l-2 border-rose-200 dark:border-gray-700 ml-4 space-y-8">
-                    @forelse($abouts->where('category', 'Pendidikan') as $edu)
-                    <div class="relative pl-6">
-                        <div class="absolute -left-[9px] top-1.5 w-4 h-4 bg-rose-600 rounded-full border-4 border-white dark:border-gray-900"></div>
-                        <h4 class="text-base font-bold text-gray-900 dark:text-white">{{ $edu->title }}</h4>
-                        @if($edu->year)
-                        <span class="text-xs font-semibold text-rose-500">{{ $edu->year }}</span>
-                        @endif
-                    </div>
-                    @empty
-                    <p class="text-gray-400 text-sm italic pl-6">Belum ada riwayat pendidikan yang ditambahkan.</p>
-                    @endforelse
-                </div>
-            </div>
-
-            <!-- Minat, PKL, & Cita-Cita (Grid Card) -->
+    <!-- Minat, PKL, & Cita-Cita (Grid Card) -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 @forelse($abouts->whereNotIn('category', ['Biodata Singkat', 'Pendidikan']) as $item)
                 <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm flex flex-col justify-between">
                     <div>
+                        <!-- Tampilkan Gambar jika ada -->
+                        @if($item->image)
+                        <div class="mb-4 overflow-hidden rounded-2xl h-48 w-full">
+                            <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}" class="w-full h-full object-cover">
+                        </div>
+                        @endif
+
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-xs font-bold text-rose-600 uppercase tracking-wider bg-rose-100 dark:bg-gray-800 px-3 py-1 rounded-full">{{ $item->category }}</span>
                             @if($item->year)
@@ -205,8 +163,6 @@
                 @empty
                 @endforelse
             </div>
-        </div>
-    </section>
 
     <!-- SECTION: SKILLS (Hard & Soft Skills) -->
     <section id="skills" class="py-20 px-6 md:px-20 bg-gray-50 dark:bg-gray-900">
