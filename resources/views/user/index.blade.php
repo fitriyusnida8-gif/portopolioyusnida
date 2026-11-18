@@ -18,6 +18,7 @@
     <nav class="flex justify-between items-center px-6 md:px-20 py-6 sticky top-0 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md z-50 border-b border-rose-50 dark:border-gray-800">
         <div class="text-rose-600 font-bold text-xl tracking-tighter">fitriyusnida</div>
 
+        <!-- Desktop Menu -->
         <ul class="hidden lg:flex space-x-6 text-gray-600 dark:text-gray-300 font-medium items-center text-sm">
             <li><a href="#" class="hover:text-rose-500 transition">HOME</a></li>
             <li><a href="#about" class="hover:text-rose-500 transition">ABOUT</a></li>
@@ -25,7 +26,6 @@
             <li><a href="#prestasi" class="hover:text-rose-500 transition">SERTIFIKAT</a></li>
             <li><a href="#projects" class="hover:text-rose-500 transition">PROJECTS</a></li>
             <li><a href="#experience" class="hover:text-rose-500 transition">EXPERIENCE</a></li>
-            <li><a href="#blog" class="hover:text-rose-500 transition">BLOG</a></li>
             <li><a href="#kesan-pesan" class="hover:text-rose-500 transition">KESAN & PESAN</a></li>
             <li><a href="#contact" class="hover:text-rose-500 transition">CONTACT</a></li>
 
@@ -43,7 +43,37 @@
                 </a>
             </li>
         </ul>
+
+        <!-- Mobile Menu & Theme Toggle Button -->
+        <div class="flex items-center gap-3 lg:hidden">
+            <button onclick="toggleDarkMode()" class="p-2 rounded-full bg-rose-50 dark:bg-gray-800 text-rose-600 dark:text-yellow-400 transition">
+                <i class="fa-solid fa-moon dark:hidden"></i>
+                <i class="fa-solid fa-sun hidden dark:block"></i>
+            </button>
+            <button onclick="toggleMobileMenu()" class="p-2 rounded-lg bg-rose-50 dark:bg-gray-800 text-rose-600 dark:text-gray-200">
+                <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+            </button>
+        </div>
     </nav>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-gray-950 border-b border-rose-50 dark:border-gray-800 px-6 py-4 fixed w-full z-40 shadow-lg">
+        <ul class="flex flex-col space-y-4 text-gray-600 dark:text-gray-300 font-medium text-sm">
+            <li><a href="#" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">HOME</a></li>
+            <li><a href="#about" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">ABOUT</a></li>
+            <li><a href="#skills" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">SKILLS</a></li>
+            <li><a href="#prestasi" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">SERTIFIKAT</a></li>
+            <li><a href="#projects" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">PROJECTS</a></li>
+            <li><a href="#experience" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">EXPERIENCE</a></li>
+            <li><a href="#kesan-pesan" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">KESAN & PESAN</a></li>
+            <li><a href="#contact" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">CONTACT</a></li>
+            <li>
+                <a href="{{ route('login') }}" class="inline-block w-full text-center px-5 py-2 bg-rose-600 text-white rounded-full hover:bg-rose-700 transition text-sm shadow-md">
+                    LOGIN
+                </a>
+            </li>
+        </ul>
+    </div>
 
     <!-- SECTION: HOME / BERANDA -->
     <section class="flex flex-col md:flex-row items-center justify-center min-h-screen px-6 md:px-20 py-10">
@@ -52,15 +82,15 @@
                 Halo Semua 👋, Saya
             </h4>
             
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mt-2 tracking-tight uppercase">
+            <h1 class="text-3xl sm:text-4xl md:text-6xl font-extrabold mt-2 tracking-tight uppercase">
                 {{ $profile->name ?? 'FITRI' }} <span class="text-rose-600">{{ Str::afterLast($profile->name ?? 'FITRI YUSNIDA', ' ') ?: 'YUSNIDA' }}</span>
             </h1>
             
-            <h2 class="text-xl sm:text-2xl font-bold text-gray-700 dark:text-gray-300 mt-2 tracking-tight uppercase">
+            <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-gray-700 dark:text-gray-300 mt-2 tracking-tight uppercase">
                 {{ $profile->class_name ?? 'XII-B' }} <span class="text-rose-600">{{ $profile->major ?? 'PENGEMBANGAN PERANGKAT LUNAK DAN GIM' }}</span>
             </h2>
 
-            <p class="mt-4 text-gray-600 dark:text-gray-400 text-base sm:text-lg leading-relaxed">
+            <p class="mt-4 text-gray-600 dark:text-gray-400 text-sm sm:text-base leading-relaxed">
                 {!! $profile->description ?? 'Siswi SMK dengan minat mendalam di bidang <strong>UI/UX Design</strong>. Fokus menciptakan desain antarmuka web dan aplikasi yang rapi, menarik, dan mudah digunakan.' !!}
             </p>
 
@@ -70,14 +100,14 @@
                 </span>
             </div>
 
-            <div class="mt-8 flex flex-wrap justify-center md:justify-start items-center gap-4">
-                <a href="#projects" class="bg-rose-600 text-white px-6 py-3 rounded-full font-bold shadow-lg shadow-rose-200 dark:shadow-none hover:bg-rose-700 transition-all text-sm sm:text-base">
+            <div class="mt-8 flex flex-wrap justify-center md:justify-start items-center gap-3 sm:gap-4">
+                <a href="#projects" class="bg-rose-600 text-white px-5 sm:px-6 py-3 rounded-full font-bold shadow-lg shadow-rose-200 dark:shadow-none hover:bg-rose-700 transition-all text-xs sm:text-base">
                     Lihat Portfolio
                 </a>
-                <a href="#cv" class="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 px-6 py-3 rounded-full font-bold hover:bg-gray-200 dark:hover:bg-gray-700 transition-all text-sm sm:text-base">
+                <a href="#cv" class="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 px-5 sm:px-6 py-3 rounded-full font-bold hover:bg-gray-200 dark:hover:bg-gray-700 transition-all text-xs sm:text-base">
                     Lihat CV
                 </a>
-                <a href="#contact" class="bg-rose-50 dark:bg-gray-800 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-gray-700 px-6 py-3 rounded-full font-bold hover:bg-rose-100 dark:hover:bg-gray-700 transition-all text-sm sm:text-base flex items-center gap-1">
+                <a href="#contact" class="bg-rose-50 dark:bg-gray-800 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-gray-700 px-5 sm:px-6 py-3 rounded-full font-bold hover:bg-rose-100 dark:hover:bg-gray-700 transition-all text-xs sm:text-base flex items-center gap-1">
                     Hubungi Saya &rarr;
                 </a>
             </div>
@@ -85,32 +115,32 @@
             
         <div class="w-full md:w-1/2 flex justify-center md:justify-end relative mt-10 md:mt-0">
             <div class="absolute -inset-4 bg-rose-500/10 rounded-full blur-2xl"></div>
-            <img src="{{ isset($profile->image) ? asset('storage/' . $profile->image) : asset('images/saya1.jpg') }}" alt="Fitri Yusnida" class="relative w-72 md:w-[420px] drop-shadow-2xl rounded-2xl border-4 border-white dark:border-gray-800 object-cover">
+            <img src="{{ isset($profile->image) ? asset('storage/' . $profile->image) : asset('images/saya1.jpg') }}" alt="Fitri Yusnida" class="relative w-64 sm:w-72 md:w-[420px] drop-shadow-2xl rounded-2xl border-4 border-white dark:border-gray-800 object-cover">
         </div>
     </section>
 
     <!-- SECTION: ABOUT ME -->
-    <section id="about" class="bg-white dark:bg-gray-950 px-6 md:px-20 py-24">
+    <section id="about" class="bg-white dark:bg-gray-950 px-6 md:px-20 py-20">
         <div class="max-w-4xl mx-auto">
             <div class="flex items-center space-x-4 mb-10">
-                <h2 class="text-3xl font-bold italic">About Me</h2>
+                <h2 class="text-2xl sm:text-3xl font-bold italic">About Me</h2>
                 <div class="h-[2px] bg-gradient-to-r from-rose-500 to-transparent flex-grow max-w-xs"></div>
             </div>
 
             <!-- Biodata Singkat -->
             <div class="mb-8 space-y-4">
                 @forelse($abouts->where('category', 'Biodata Singkat') as $bio)
-                <div class="bg-rose-50/40 dark:bg-gray-900 p-8 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm">
-                    <h3 class="text-xl font-bold text-rose-600 flex items-center gap-2 mb-3">
+                <div class="bg-rose-50/40 dark:bg-gray-900 p-6 sm:p-8 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm">
+                    <h3 class="text-lg sm:text-xl font-bold text-rose-600 flex items-center gap-2 mb-3">
                         <i class="fa-solid fa-user"></i> {{ $bio->title ?: 'Biodata Singkat' }}
                     </h3>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-base sm:text-lg">
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-sm sm:text-base">
                         {{ $bio->description }}
                     </p>
                 </div>
                 @empty
-                <div class="bg-rose-50/40 dark:bg-gray-900 p-8 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm">
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-base sm:text-lg">
+                <div class="bg-rose-50/40 dark:bg-gray-900 p-6 sm:p-8 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm">
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-sm sm:text-base">
                         Halo! Nama saya <span class="text-rose-600 font-semibold">Fitri Yusnida</span>, berdomisili di <span class="font-medium text-gray-800 dark:text-gray-200">Banjarmasin</span>. Saat ini saya menempuh pendidikan di <span class="font-semibold text-gray-900 dark:text-white">SMKN 2 Banjarmasin</span> pada jurusan <span class="text-rose-600 font-medium">Pengembangan Perangkat Lunak dan Gim (PPLG)</span>.
                     </p>
                 </div>
@@ -118,8 +148,8 @@
             </div>
 
             <!-- Riwayat Pendidikan (Timeline) -->
-            <div class="mb-12 bg-gray-50 dark:bg-gray-900 p-8 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm">
-                <h3 class="text-xl font-bold mb-6 text-rose-600 flex items-center gap-2">
+            <div class="mb-12 bg-gray-50 dark:bg-gray-900 p-6 sm:p-8 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm">
+                <h3 class="text-lg sm:text-xl font-bold mb-6 text-rose-600 flex items-center gap-2">
                     <i class="fa-solid fa-graduation-cap"></i> Riwayat Pendidikan
                 </h3>
                 
@@ -127,7 +157,7 @@
                     @forelse($abouts->where('category', 'Pendidikan') as $edu)
                     <div class="relative pl-6">
                         <div class="absolute -left-[9px] top-1.5 w-4 h-4 bg-rose-600 rounded-full border-4 border-white dark:border-gray-900"></div>
-                        <h4 class="text-base font-bold text-gray-900 dark:text-white">{{ $edu->title }}</h4>
+                        <h4 class="text-sm sm:text-base font-bold text-gray-900 dark:text-white">{{ $edu->title }}</h4>
                         @if($edu->year)
                         <span class="text-xs font-semibold text-rose-500">{{ $edu->year }}</span>
                         @endif
@@ -149,9 +179,9 @@
                             <span class="text-xs font-semibold text-gray-400">{{ $item->year }}</span>
                             @endif
                         </div>
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-2">{{ $item->title }}</h3>
+                        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mt-2">{{ $item->title }}</h3>
                         @if($item->description)
-                        <p class="text-sm text-gray-600 dark:text-gray-300 mt-2 leading-relaxed">{{ $item->description }}</p>
+                        <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mt-2 leading-relaxed">{{ $item->description }}</p>
                         @endif
                     </div>
                 </div>
@@ -165,18 +195,18 @@
     <section id="skills" class="py-20 px-6 md:px-20 bg-gray-50 dark:bg-gray-900">
         <div class="max-w-4xl mx-auto">
             <div class="flex items-center space-x-4 mb-10">
-                <h2 class="text-3xl font-bold italic">Hard & Soft Skills</h2>
+                <h2 class="text-2xl sm:text-3xl font-bold italic">Hard & Soft Skills</h2>
                 <div class="h-[2px] bg-gradient-to-r from-rose-500 to-transparent flex-grow max-w-xs"></div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <!-- Hard Skills Box -->
-                <div class="bg-white dark:bg-gray-950 p-8 rounded-3xl shadow-sm border border-rose-100 dark:border-gray-800">
-                    <h3 class="text-xl font-bold text-rose-600 mb-6"><i class="fa-solid fa-code mr-2"></i> Hard Skills</h3>
+                <div class="bg-white dark:bg-gray-950 p-6 sm:p-8 rounded-3xl shadow-sm border border-rose-100 dark:border-gray-800">
+                    <h3 class="text-lg sm:text-xl font-bold text-rose-600 mb-6"><i class="fa-solid fa-code mr-2"></i> Hard Skills</h3>
                     <div class="space-y-6">
                         @forelse($skills->where('category', 'hard') as $skill)
                         <div class="space-y-2 border-b border-gray-100 dark:border-gray-900 pb-4">
-                            <div class="flex justify-between text-sm font-semibold">
+                            <div class="flex justify-between text-xs sm:text-sm font-semibold">
                                 <span>{{ $skill->name }}</span>
                                 <span class="text-rose-600">{{ $skill->percentage }}%</span>
                             </div>
@@ -191,12 +221,12 @@
                 </div>
 
                 <!-- Soft Skills Box -->
-                <div class="bg-white dark:bg-gray-950 p-8 rounded-3xl shadow-sm border border-rose-100 dark:border-gray-800">
-                    <h3 class="text-xl font-bold text-rose-600 mb-6"><i class="fa-solid fa-users mr-2"></i> Soft Skills</h3>
+                <div class="bg-white dark:bg-gray-950 p-6 sm:p-8 rounded-3xl shadow-sm border border-rose-100 dark:border-gray-800">
+                    <h3 class="text-lg sm:text-xl font-bold text-rose-600 mb-6"><i class="fa-solid fa-users mr-2"></i> Soft Skills</h3>
                     <div class="space-y-6">
                         @forelse($skills->where('category', 'soft') as $skill)
                         <div class="space-y-2 border-b border-gray-100 dark:border-gray-900 pb-4">
-                            <div class="flex justify-between text-sm font-semibold">
+                            <div class="flex justify-between text-xs sm:text-sm font-semibold">
                                 <span>{{ $skill->name }}</span>
                                 <span class="text-rose-600">{{ $skill->percentage }}%</span>
                             </div>
@@ -217,7 +247,7 @@
     <section id="prestasi" class="py-20 px-6 md:px-20 bg-white dark:bg-gray-950">
         <div class="max-w-6xl mx-auto">
             <div class="mb-10">
-                <h2 class="text-3xl font-bold text-rose-600">Sertifikat & Prestasi</h2>
+                <h2 class="text-2xl sm:text-3xl font-bold text-rose-600">Sertifikat & Prestasi</h2>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -228,8 +258,8 @@
                             <i class="fa-solid fa-award"></i>
                         </div>
                         <div class="space-y-1 w-full">
-                            <h4 class="font-bold text-lg group-hover:text-rose-600 transition">{{ $certificate->title }}</h4>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $certificate->description }}</p>
+                            <h4 class="font-bold text-base sm:text-lg group-hover:text-rose-600 transition">{{ $certificate->title }}</h4>
+                            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{{ $certificate->description }}</p>
                             
                             @if($certificate->image)
                             <div class="mt-3 w-full h-48 rounded-xl overflow-hidden border border-rose-100 dark:border-gray-800 bg-white dark:bg-gray-950 flex items-center justify-center">
@@ -252,7 +282,7 @@
     <section id="projects" class="py-20 px-6 bg-rose-50/30 dark:bg-gray-900">
         <div class="max-w-6xl mx-auto">
             <div class="mb-12">
-                <h2 class="text-3xl font-bold text-rose-600">My Projects</h2>
+                <h2 class="text-2xl sm:text-3xl font-bold text-rose-600">My Projects</h2>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -270,8 +300,8 @@
                             @endif
                         </div>
                         <div class="p-6 space-y-3">
-                            <h3 class="text-lg font-bold group-hover:text-rose-600 transition">{{ $project->title }}</h3>
-                            <p class="text-gray-500 dark:text-gray-400 text-sm line-clamp-2">{{ $project->description }}</p>
+                            <h3 class="text-base sm:text-lg font-bold group-hover:text-rose-600 transition">{{ $project->title }}</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-xs sm:text-sm line-clamp-2">{{ $project->description }}</p>
                             @if($project->technologies)
                             <div class="flex flex-wrap gap-1.5 pt-1">
                                 @foreach(explode(',', $project->technologies) as $tech)
@@ -306,7 +336,7 @@
     <section id="experience" class="py-20 px-6 md:px-20 bg-white dark:bg-gray-950">
         <div class="max-w-4xl mx-auto">
             <div class="mb-10">
-                <h2 class="text-3xl font-bold text-rose-600">Pengalaman & PKL</h2>
+                <h2 class="text-2xl sm:text-3xl font-bold text-rose-600">Pengalaman & PKL</h2>
             </div>
 
             <div class="border-l-2 border-rose-200 dark:border-gray-800 ml-4 space-y-10 pl-6">
@@ -315,8 +345,8 @@
                     <div class="absolute -left-[37px] top-6 w-4 h-4 bg-rose-600 rounded-full border-4 border-white dark:border-gray-950"></div>
                     
                     <span class="text-xs font-semibold text-rose-500 uppercase tracking-wider">{{ $experience->period }}</span>
-                    <h3 class="text-lg font-bold mt-1">{{ $experience->title }}</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">{{ $experience->description }}</p>
+                    <h3 class="text-base sm:text-lg font-bold mt-1">{{ $experience->title }}</h3>
+                    <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-2">{{ $experience->description }}</p>
                 </div>
                 @empty
                 <div class="text-center py-8 bg-gray-50 dark:bg-gray-900 rounded-2xl border border-dashed border-rose-200 dark:border-gray-800 p-6">
@@ -330,37 +360,23 @@
     <!-- SECTION: CV DIGITAL -->
     <section id="cv" class="py-20 px-6 bg-rose-50/50 dark:bg-gray-900">
         <div class="max-w-xl mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-3 text-rose-600">Curriculum Vitae (CV)</h2>
-            <p class="text-gray-500 dark:text-gray-400 mb-8 text-sm">Unduh CV resmi saya atau lihat di tab baru.</p>
+            <h2 class="text-2xl sm:text-3xl font-bold mb-3 text-rose-600">Curriculum Vitae (CV)</h2>
+            <p class="text-gray-500 dark:text-gray-400 mb-8 text-xs sm:text-sm">Unduh CV resmi saya atau lihat di tab baru.</p>
 
             @if(isset($profile) && $profile->cv_file)
                 <div class="bg-white dark:bg-gray-950 p-6 rounded-3xl shadow-sm border border-rose-100 dark:border-gray-800 mb-6 flex flex-wrap justify-center items-center gap-3">
-                    <a href="{{ asset('storage/' . $profile->cv_file) }}" download="CV_Fitri_Yusnida" class="inline-flex items-center gap-2 bg-rose-600 text-white px-6 py-3 rounded-xl font-semibold shadow-sm hover:bg-rose-700 transition text-sm">
+                    <a href="{{ asset('storage/' . $profile->cv_file) }}" download="CV_Fitri_Yusnida" class="inline-flex items-center gap-2 bg-rose-600 text-white px-5 sm:px-6 py-3 rounded-xl font-semibold shadow-sm hover:bg-rose-700 transition text-xs sm:text-sm">
                         <i class="fa-solid fa-download"></i> Unduh CV
                     </a>
-                    <a href="{{ asset('storage/' . $profile->cv_file) }}" target="_blank" class="inline-flex items-center gap-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 px-6 py-3 rounded-xl font-semibold hover:bg-gray-200 transition text-sm">
+                    <a href="{{ asset('storage/' . $profile->cv_file) }}" target="_blank" class="inline-flex items-center gap-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 px-5 sm:px-6 py-3 rounded-xl font-semibold hover:bg-gray-200 transition text-xs sm:text-sm">
                         <i class="fa-solid fa-up-right-from-square"></i> Lihat CV
                     </a>
                 </div>
             @else
                 <div class="bg-white dark:bg-gray-950 p-6 rounded-3xl shadow-sm border border-rose-100 dark:border-gray-800 mb-6 text-center">
-                    <p class="text-sm text-gray-400 italic">Belum ada file CV yang diunggah.</p>
+                    <p class="text-xs sm:text-sm text-gray-400 italic">Belum ada file CV yang diunggah.</p>
                 </div>
             @endif
-        </div>
-    </section>
-    
-    <!-- SECTION: BLOG PENGEMBANG / CATATAN NGODING -->
-    <section id="blog" class="py-20 px-6 md:px-20 bg-white dark:bg-gray-950">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold text-rose-600 mb-10 text-center">Catatan Ngoding & Blog</h2>
-            <div class="space-y-4">
-                <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-2xl shadow-sm border border-rose-100 dark:border-gray-800">
-                    <span class="text-xs text-rose-500 font-semibold">10 Februari 2026</span>
-                    <h3 class="text-lg font-bold mt-1">Tips Mengatasi Error Migration di Laravel</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Catatan singkat bagaimana cara melakukan rollback dan mengatasi foreign key constraint saat uji coba database...</p>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -370,36 +386,36 @@
             
             <!-- DAFTAR PESAN YANG MASUK -->
             <div class="space-y-4">
-                <h2 class="text-2xl font-bold text-center mb-6 text-rose-600">Kesan & Pesan Pengunjung</h2>
+                <h2 class="text-xl sm:text-2xl font-bold text-center mb-6 text-rose-600">Kesan & Pesan Pengunjung</h2>
                 
                 @forelse($messages ?? [] as $msg)
                 <div class="bg-white dark:bg-gray-950 p-5 rounded-2xl border border-rose-100 dark:border-gray-800 shadow-sm relative">
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-bold text-rose-600 text-sm"><i class="fa-solid fa-user-circle mr-1"></i> {{ $msg->name }}</h4>
-                        <span class="text-xs text-gray-400">{{ $msg->created_at->diffForHumans() }}</span>
+                        <h4 class="font-bold text-rose-600 text-xs sm:text-sm"><i class="fa-solid fa-user-circle mr-1"></i> {{ $msg->name }}</h4>
+                        <span class="text-[10px] sm:text-xs text-gray-400">{{ $msg->created_at->diffForHumans() }}</span>
                     </div>
-                    <p class="text-sm text-gray-700 dark:text-gray-300">{{ $msg->message }}</p>
+                    <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">{{ $msg->message }}</p>
                 </div>
                 @empty
                 <div class="text-center py-6 bg-white dark:bg-gray-950 rounded-2xl border border-dashed border-rose-200 dark:border-gray-800">
-                    <p class="text-sm text-gray-400 italic">Belum ada kesan & pesan yang dikirim.</p>
+                    <p class="text-xs sm:text-sm text-gray-400 italic">Belum ada kesan & pesan yang dikirim.</p>
                 </div>
                 @endforelse
             </div>
 
             <!-- FORMULIR INPUT KESAN & PESAN -->
-            <div class="bg-white dark:bg-gray-950 p-8 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm">
-                <h3 class="text-lg font-bold mb-4 text-center">Tuliskan Kesan & Pesan Anda</h3>
+            <div class="bg-white dark:bg-gray-950 p-6 sm:p-8 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm">
+                <h3 class="text-base sm:text-lg font-bold mb-4 text-center">Tuliskan Kesan & Pesan Anda</h3>
                 
                 <form action="{{ route('messages.store') }}" method="POST" class="space-y-4">
                     @csrf
                     <div>
-                        <input type="text" name="name" required placeholder="Nama Anda" class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-sm">
+                        <input type="text" name="name" required placeholder="Nama Anda" class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-xs sm:text-sm">
                     </div>
                     <div>
-                        <textarea name="message" rows="3" required placeholder="Tuliskan kesan dan pesan Anda..." class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-sm"></textarea>
+                        <textarea name="message" rows="3" required placeholder="Tuliskan kesan dan pesan Anda..." class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-xs sm:text-sm"></textarea>
                     </div>
-                    <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2.5 rounded-xl text-sm transition shadow-md">
+                    <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2.5 rounded-xl text-xs sm:text-sm transition shadow-md">
                         <i class="fa-solid fa-paper-plane mr-1"></i> Kirim Pesan
                     </button>
                 </form>
@@ -411,21 +427,21 @@
     <!-- SECTION: CONTACT -->
     <section id="contact" class="py-20 px-6 text-center bg-gray-50 dark:bg-gray-950">
         <div class="max-w-4xl mx-auto">
-            <h2 class="text-4xl font-bold mb-12 tracking-tight">CONTACT</h2>
-            <div class="flex flex-wrap justify-center gap-6">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-12 tracking-tight">CONTACT</h2>
+            <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
                 <!-- Email -->
-                <a href="mailto:fitriyusnida8@gmail.com" class="flex items-center space-x-3 bg-rose-600 text-white px-7 py-3 rounded-xl hover:-translate-y-1 transition shadow-lg">
-                    <i class="fa-solid fa-envelope text-xl"></i>
+                <a href="mailto:fitriyusnida8@gmail.com" class="flex items-center space-x-3 bg-rose-600 text-white px-5 sm:px-7 py-3 rounded-xl hover:-translate-y-1 transition shadow-lg text-sm">
+                    <i class="fa-solid fa-envelope text-lg"></i>
                     <span class="font-bold">Email</span>
                 </a>
                 <!-- GitHub -->
-                <a href="https://github.com/fitriyusnida8-gif" target="_blank" class="flex items-center space-x-3 bg-gray-900 dark:bg-gray-800 text-white px-7 py-3 rounded-xl hover:-translate-y-1 transition shadow-lg border border-gray-700">
-                    <i class="fa-brands fa-github text-xl"></i>
+                <a href="https://github.com/fitriyusnida8-gif" target="_blank" class="flex items-center space-x-3 bg-gray-900 dark:bg-gray-800 text-white px-5 sm:px-7 py-3 rounded-xl hover:-translate-y-1 transition shadow-lg border border-gray-700 text-sm">
+                    <i class="fa-brands fa-github text-lg"></i>
                     <span class="font-bold">GitHub</span>
                 </a>
                 <!-- Instagram -->
-                <a href="https://instagram.com/fiidaysndaa" target="_blank" class="flex items-center space-x-3 bg-gradient-to-tr from-rose-400 via-pink-500 to-rose-600 text-white px-7 py-3 rounded-xl hover:-translate-y-1 transition shadow-lg">
-                    <i class="fa-brands fa-instagram text-xl"></i>
+                <a href="https://instagram.com/fiidaysndaa" target="_blank" class="flex items-center space-x-3 bg-gradient-to-tr from-rose-400 via-pink-500 to-rose-600 text-white px-5 sm:px-7 py-3 rounded-xl hover:-translate-y-1 transition shadow-lg text-sm">
+                    <i class="fa-brands fa-instagram text-lg"></i>
                     <span class="font-bold">Instagram</span>
                 </a>
             </div>
@@ -439,13 +455,27 @@
 
     <!-- FOOTER -->
     <footer class="bg-rose-950 dark:bg-gray-950 text-white px-6 md:px-20 py-8 text-center w-full">
-        <p class="text-rose-200/60 text-sm tracking-widest uppercase">© 2026 Fitri Yusnida - UKK PPLG</p>
+        <p class="text-rose-200/60 text-xs sm:text-sm tracking-widest uppercase">© 2026 Fitri Yusnida - UKK PPLG</p>
     </footer>
 
-    <!-- SCRIPT INTERAKTIF DARK MODE -->
+    <!-- SCRIPT INTERAKTIF (DARK MODE & MOBILE MENU) -->
     <script>
         function toggleDarkMode() {
             document.documentElement.classList.toggle('dark');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            menu.classList.toggle('hidden');
+            
+            if (menu.classList.contains('hidden')) {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            }
         }
     </script>
 </body>
