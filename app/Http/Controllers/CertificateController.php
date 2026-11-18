@@ -24,14 +24,13 @@ class CertificateController extends Controller
 
         Certificate::create($data);
 
-        return redirect()->back()->with('success', 'Sertifikat berhasil ditambahkan!');
+        // Mengarahkan kembali ke dashboard bagian #certificates
+        return redirect()->to(route('dashboard') . '#certificates')->with('success', 'Sertifikat berhasil ditambahkan!');
     }
 
-    // --- TAMBAHKAN INI UNTUK EDIT ---
     public function edit($id)
     {
         $certificate = Certificate::findOrFail($id);
-        // Pastikan Anda membuat file view edit sertifikat (resources/views/certificates/edit.blade.php)
         return view('certificates.edit', compact('certificate'));
     }
 
@@ -56,9 +55,9 @@ class CertificateController extends Controller
 
         $certificate->update($data);
 
-        return redirect()->route('dashboard')->with('success', 'Sertifikat berhasil diperbarui!');
+        // Mengarahkan ke dashboard bagian #certificates setelah update
+        return redirect()->to(route('dashboard') . '#certificates')->with('success', 'Sertifikat berhasil diperbarui!');
     }
-    // ---------------------------------
 
     public function destroy($id)
     {
@@ -70,6 +69,7 @@ class CertificateController extends Controller
 
         $certificate->delete();
 
-        return redirect()->back()->with('success', 'Sertifikat berhasil dihapus!');
+        // Mengarahkan kembali ke dashboard bagian #certificates setelah hapus
+        return redirect()->to(route('dashboard') . '#certificates')->with('success', 'Sertifikat berhasil dihapus!');
     }
 }
