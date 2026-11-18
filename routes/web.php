@@ -11,6 +11,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AboutController;
 
+
 // 2. Proses Sistem Login Manual
 Route::middleware(['guest'])->group(function () {
 
@@ -75,3 +76,10 @@ Route::post('/abouts', [AboutController::class, 'store'])->name('abouts.store');
 Route::get('/abouts/{id}/edit', [AboutController::class, 'edit'])->name('abouts.edit');
 Route::put('/abouts/{id}', [AboutController::class, 'update'])->name('abouts.update');
 Route::delete('/abouts/{id}', [AboutController::class, 'destroy'])->name('abouts.destroy');
+
+
+// Route untuk kelola CV Admin
+Route::middleware(['auth'])->group(function () {
+    Route::post('/admin/profile/cv', [ProfileController::class, 'updateCv'])->name('profile.cv.update');
+    Route::delete('/admin/profile/cv', [ProfileController::class, 'destroyCv'])->name('profile.cv.destroy');
+});

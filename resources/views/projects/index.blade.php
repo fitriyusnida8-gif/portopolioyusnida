@@ -84,7 +84,6 @@
     <!-- SECTION: HOME / BERANDA -->
     <section class="flex flex-col md:flex-row items-center justify-center min-h-screen px-6 md:px-20 py-10">
         <div class="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left">
-            
             <div class="mb-4 flex justify-center md:justify-start">
                 <a href="{{ route('profile.edit') }}" class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-sm">
                     <i class="fa-solid fa-pen-to-square"></i> Edit Profil Beranda
@@ -141,7 +140,6 @@
                 </a>
             </div>
 
-            <!-- Biodata Singkat -->
             <div class="mb-8 space-y-4">
                 @forelse($abouts->where('category', 'Biodata Singkat') as $bio)
                 <div class="bg-rose-50/40 dark:bg-gray-900 p-6 sm:p-8 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm relative group">
@@ -150,20 +148,14 @@
                             <i class="fa-solid fa-user-pen"></i> {{ $bio->title ?: 'Biodata Singkat' }}
                         </h3>
                         <div class="flex items-center gap-2">
-                            <a href="{{ route('abouts.edit', $bio->id) }}" class="text-amber-500 hover:text-amber-600 text-xs font-semibold px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-gray-800 transition">
-                                <i class="fa-solid fa-pen"></i> Edit
-                            </a>
+                            <a href="{{ route('abouts.edit', $bio->id) }}" class="text-amber-500 hover:text-amber-600 text-xs font-semibold px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-gray-800 transition"><i class="fa-solid fa-pen"></i> Edit</a>
                             <form action="{{ route('abouts.destroy', $bio->id) }}" method="POST" onsubmit="return confirm('Hapus biodata ini?')">
                                 @csrf @method('DELETE')
-                                <button type="submit" class="text-red-500 hover:text-red-600 text-xs font-semibold px-3 py-1.5 rounded-xl bg-red-50 dark:bg-gray-800 transition">
-                                    <i class="fa-solid fa-trash"></i> Hapus
-                                </button>
+                                <button type="submit" class="text-red-500 hover:text-red-600 text-xs font-semibold px-3 py-1.5 rounded-xl bg-red-50 dark:bg-gray-800 transition"><i class="fa-solid fa-trash"></i> Hapus</button>
                             </form>
                         </div>
                     </div>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-sm sm:text-base">
-                        {{ $bio->description }}
-                    </p>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-sm sm:text-base">{{ $bio->description }}</p>
                 </div>
                 @empty
                 <div class="bg-rose-50/20 dark:bg-gray-900 p-6 rounded-3xl border border-dashed border-rose-200 dark:border-gray-800 text-center">
@@ -174,10 +166,7 @@
 
             <!-- Riwayat Pendidikan -->
             <div class="mb-12 bg-gray-50 dark:bg-gray-900 p-6 sm:p-8 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm">
-                <h3 class="text-lg sm:text-xl font-bold mb-6 text-rose-600 flex items-center gap-2">
-                    <i class="fa-solid fa-graduation-cap"></i> Riwayat Pendidikan
-                </h3>
-                
+                <h3 class="text-lg sm:text-xl font-bold mb-6 text-rose-600 flex items-center gap-2"><i class="fa-solid fa-graduation-cap"></i> Riwayat Pendidikan</h3>
                 <div class="relative border-l-2 border-rose-200 dark:border-gray-700 ml-4 space-y-8">
                     @forelse($abouts->where('category', 'Pendidikan') as $edu)
                     <div class="relative pl-6 group">
@@ -185,9 +174,7 @@
                         <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center">
                             <div>
                                 <h4 class="text-sm sm:text-base font-bold text-gray-900 dark:text-white">{{ $edu->title }}</h4>
-                                @if($edu->year)
-                                <span class="text-xs font-semibold text-rose-500">{{ $edu->year }}</span>
-                                @endif
+                                @if($edu->year)<span class="text-xs font-semibold text-rose-500">{{ $edu->year }}</span>@endif
                             </div>
                             <div class="mt-2 sm:mt-0 flex items-center gap-2">
                                 <a href="{{ route('abouts.edit', $edu->id) }}" class="text-amber-500 hover:text-amber-600 text-xs font-semibold px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-gray-800 transition">Edit</a>
@@ -211,14 +198,10 @@
                     <div>
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-xs font-bold text-rose-600 uppercase tracking-wider bg-rose-100 dark:bg-gray-800 px-3 py-1 rounded-full">{{ $item->category }}</span>
-                            @if($item->year)
-                            <span class="text-xs font-semibold text-gray-400">{{ $item->year }}</span>
-                            @endif
+                            @if($item->year)<span class="text-xs font-semibold text-gray-400">{{ $item->year }}</span>@endif
                         </div>
                         <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mt-2">{{ $item->title }}</h3>
-                        @if($item->description)
-                        <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mt-2 leading-relaxed">{{ $item->description }}</p>
-                        @endif
+                        @if($item->description)<p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mt-2 leading-relaxed">{{ $item->description }}</p>@endif
                     </div>
                     <div class="mt-6 pt-4 border-t border-rose-100 dark:border-gray-800 flex items-center gap-3">
                         <a href="{{ route('abouts.edit', $item->id) }}" class="flex-1 text-center bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold py-2 rounded-xl transition">Edit</a>
@@ -237,9 +220,7 @@
     <!-- FORM INPUT ABOUT ME BARU -->
     <section id="form-about" class="py-16 px-6 bg-gray-50 dark:bg-gray-900">
         <div class="max-w-xl mx-auto">
-            <div class="text-center mb-10">
-                <h2 class="text-xl sm:text-2xl font-bold mb-2">Form Tambah Info About Me</h2>
-            </div>
+            <div class="text-center mb-10"><h2 class="text-xl sm:text-2xl font-bold mb-2">Form Tambah Info About Me</h2></div>
             <div class="bg-white dark:bg-gray-950 rounded-3xl p-6 sm:p-8 border border-rose-100 dark:border-gray-800 shadow-sm">
                 <form action="{{ route('abouts.store') }}" method="POST" class="space-y-5">
                     @csrf
@@ -276,9 +257,7 @@
         <div class="max-w-4xl mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
                 <h2 class="text-2xl sm:text-3xl font-bold">Hard & Soft Skills</h2>
-                <a href="#form-skill" class="bg-rose-600 hover:bg-rose-700 text-white px-6 py-2.5 rounded-full font-semibold shadow-md transition-all text-sm">
-                    <i class="fa-solid fa-plus mr-2"></i>Tambah Skill
-                </a>
+                <a href="#form-skill" class="bg-rose-600 hover:bg-rose-700 text-white px-6 py-2.5 rounded-full font-semibold shadow-md transition-all text-sm"><i class="fa-solid fa-plus mr-2"></i>Tambah Skill</a>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -287,13 +266,8 @@
                     <div class="space-y-6">
                         @forelse($skills->where('category', 'hard') as $skill)
                         <div class="space-y-2 border-b border-gray-100 dark:border-gray-900 pb-4">
-                            <div class="flex justify-between text-xs sm:text-sm font-semibold">
-                                <span>{{ $skill->name }}</span>
-                                <span class="text-rose-600">{{ $skill->percentage }}%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 dark:bg-gray-800 h-2.5 rounded-full overflow-hidden">
-                                <div class="bg-rose-600 h-2.5 rounded-full" style="width: {{ $skill->percentage }}%"></div>
-                            </div>
+                            <div class="flex justify-between text-xs sm:text-sm font-semibold"><span>{{ $skill->name }}</span><span class="text-rose-600">{{ $skill->percentage }}%</span></div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-800 h-2.5 rounded-full overflow-hidden"><div class="bg-rose-600 h-2.5 rounded-full" style="width: {{ $skill->percentage }}%"></div></div>
                             <div class="flex items-center gap-2 pt-2">
                                 <a href="{{ route('skills.edit', $skill->id) }}" class="flex-1 text-center bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold py-1.5 rounded-lg transition">Edit</a>
                                 <form action="{{ route('skills.destroy', $skill->id) }}" method="POST" class="flex-1" onsubmit="return confirm('Hapus skill ini?')">
@@ -313,13 +287,8 @@
                     <div class="space-y-6">
                         @forelse($skills->where('category', 'soft') as $skill)
                         <div class="space-y-2 border-b border-gray-100 dark:border-gray-900 pb-4">
-                            <div class="flex justify-between text-xs sm:text-sm font-semibold">
-                                <span>{{ $skill->name }}</span>
-                                <span class="text-rose-600">{{ $skill->percentage }}%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 dark:bg-gray-800 h-2.5 rounded-full overflow-hidden">
-                                <div class="bg-rose-600 h-2.5 rounded-full" style="width: {{ $skill->percentage }}%"></div>
-                            </div>
+                            <div class="flex justify-between text-xs sm:text-sm font-semibold"><span>{{ $skill->name }}</span><span class="text-rose-600">{{ $skill->percentage }}%</span></div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-800 h-2.5 rounded-full overflow-hidden"><div class="bg-rose-600 h-2.5 rounded-full" style="width: {{ $skill->percentage }}%"></div></div>
                             <div class="flex items-center gap-2 pt-2">
                                 <a href="{{ route('skills.edit', $skill->id) }}" class="flex-1 text-center bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold py-1.5 rounded-lg transition">Edit</a>
                                 <form action="{{ route('skills.destroy', $skill->id) }}" method="POST" class="flex-1" onsubmit="return confirm('Hapus skill ini?')">
@@ -340,16 +309,11 @@
     <!-- FORM INPUT SKILL BARU -->
     <section id="form-skill" class="py-16 px-6 bg-white dark:bg-gray-950">
         <div class="max-w-xl mx-auto">
-            <div class="text-center mb-10">
-                <h2 class="text-xl sm:text-2xl font-bold mb-2">Form Tambah Skill Baru</h2>
-            </div>
+            <div class="text-center mb-10"><h2 class="text-xl sm:text-2xl font-bold mb-2">Form Tambah Skill Baru</h2></div>
             <div class="bg-rose-50/40 dark:bg-gray-900 rounded-3xl p-6 sm:p-8 border border-rose-100 dark:border-gray-800">
                 <form action="{{ route('skills.store') }}" method="POST" class="space-y-5">
                     @csrf
-                    <div>
-                        <label class="block text-sm font-semibold mb-2">Nama Skill</label>
-                        <input type="text" name="name" required placeholder="Contoh: Laravel & PHP" class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
-                    </div>
+                    <div><label class="block text-sm font-semibold mb-2">Nama Skill</label><input type="text" name="name" required placeholder="Contoh: Laravel & PHP" class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm"></div>
                     <div>
                         <label class="block text-sm font-semibold mb-2">Kategori Skill</label>
                         <select name="category" class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
@@ -357,10 +321,7 @@
                             <option value="soft">Soft Skills</option>
                         </select>
                     </div>
-                    <div>
-                        <label class="block text-sm font-semibold mb-2">Persentase (0 - 100)</label>
-                        <input type="number" min="0" max="100" name="percentage" required placeholder="Contoh: 85" class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
-                    </div>
+                    <div><label class="block text-sm font-semibold mb-2">Persentase (0 - 100)</label><input type="number" min="0" max="100" name="percentage" required placeholder="Contoh: 85" class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm"></div>
                     <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-3 rounded-xl transition shadow-md text-sm">Simpan Skill</button>
                 </form>
             </div>
@@ -372,30 +333,55 @@
         <div class="max-w-6xl mx-auto">
             <div class="mb-10 flex flex-col md:flex-row justify-between items-center gap-4">
                 <h2 class="text-2xl sm:text-3xl font-bold text-rose-600">Sertifikat & Prestasi</h2>
+                <a href="#form-certificate" class="bg-rose-600 hover:bg-rose-700 text-white px-6 py-2.5 rounded-full font-semibold shadow-md transition-all text-sm"><i class="fa-solid fa-plus mr-2"></i>Tambah Sertifikat</a>
             </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 @forelse($certificates ?? [] as $certificate)
-                <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-2xl shadow-sm border border-rose-100 dark:border-gray-800 flex flex-col justify-between h-full group">
-                    <div class="flex items-start gap-4">
-                        <div class="p-3 bg-rose-50 dark:bg-gray-800 text-rose-600 rounded-xl text-xl flex-shrink-0">
-                            <i class="fa-solid fa-award"></i>
-                        </div>
-                        <div class="space-y-1 w-full">
-                            <h4 class="font-bold text-base sm:text-lg group-hover:text-rose-600 transition">{{ $certificate->title }}</h4>
-                            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{{ $certificate->description }}</p>
-                            @if($certificate->image)
-                            <div class="mt-3 w-full h-48 rounded-xl overflow-hidden border border-rose-100 dark:border-gray-800 bg-white dark:bg-gray-950 flex items-center justify-center">
-                                <img src="{{ asset('storage/' . $certificate->image) }}" alt="{{ $certificate->title }}" class="w-full h-full object-contain">
+                <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-3xl shadow-sm border border-rose-100 dark:border-gray-800 flex flex-col justify-between h-full group">
+                    <div>
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 bg-rose-50 dark:bg-gray-800 text-rose-600 rounded-xl text-xl flex-shrink-0"><i class="fa-solid fa-award"></i></div>
+                            <div class="space-y-1 w-full">
+                                <h4 class="font-bold text-base sm:text-lg group-hover:text-rose-600 transition">{{ $certificate->title }}</h4>
+                                <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{{ $certificate->description }}</p>
                             </div>
-                            @endif
                         </div>
+                        @if($certificate->image)
+                        <div class="mt-4 w-full h-48 rounded-2xl overflow-hidden border border-rose-100 dark:border-gray-800 bg-white dark:bg-gray-950 flex items-center justify-center">
+                            <img src="{{ asset('storage/' . $certificate->image) }}" alt="{{ $certificate->title }}" class="w-full h-full object-cover">
+                        </div>
+                        @endif
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-rose-100 dark:border-gray-800 flex items-center gap-3">
+                        <a href="{{ route('certificates.edit', $certificate->id) }}" class="flex-1 text-center bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold py-2.5 rounded-xl transition">Edit</a>
+                        <form action="{{ route('certificates.destroy', $certificate->id) }}" method="POST" class="flex-1" onsubmit="return confirm('Hapus sertifikat ini?')">
+                            @csrf @method('DELETE')
+                            <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold py-2.5 rounded-xl transition">Delete</button>
+                        </form>
                     </div>
                 </div>
                 @empty
-                <div class="col-span-full text-center py-12 bg-gray-50 dark:bg-gray-900 rounded-3xl border-2 border-dashed border-rose-200 dark:border-gray-800 p-8">
+                <div class="col-span-full text-center py-16 bg-gray-50 dark:bg-gray-900 rounded-3xl border-2 border-dashed border-rose-200 dark:border-gray-800 p-8">
                     <p class="text-gray-400 text-sm italic">Belum ada sertifikat atau prestasi yang ditambahkan.</p>
                 </div>
                 @endforelse
+            </div>
+        </div>
+    </section>
+
+    <!-- FORM INPUT SERTIFIKAT BARU (#form-certificate) -->
+    <section id="form-certificate" class="py-16 px-6 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-xl mx-auto">
+            <div class="text-center mb-10"><h2 class="text-xl sm:text-2xl font-bold mb-2">Form Tambah Sertifikat Baru</h2></div>
+            <div class="bg-white dark:bg-gray-950 rounded-3xl p-6 sm:p-8 border border-rose-100 dark:border-gray-800 shadow-sm">
+                <form action="{{ route('certificates.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
+                    @csrf
+                    <div><label class="block text-sm font-semibold mb-2">Judul Sertifikat / Prestasi</label><input type="text" name="title" required placeholder="Contoh: Juara 1 UI/UX Design UKK" class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm"></div>
+                    <div><label class="block text-sm font-semibold mb-2">Deskripsi</label><textarea name="description" rows="3" placeholder="Tuliskan keterangan singkat..." class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm"></textarea></div>
+                    <div><label class="block text-sm font-semibold mb-2">Upload Gambar Sertifikat</label><input type="file" name="image" class="w-full px-4 py-2 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-rose-600 hover:file:bg-rose-100"></div>
+                    <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-3 rounded-xl transition shadow-md text-sm">Simpan Sertifikat</button>
+                </form>
             </div>
         </div>
     </section>
@@ -405,9 +391,7 @@
         <div class="max-w-6xl mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-4">
                 <h2 class="text-2xl sm:text-3xl font-bold text-rose-600">My Projects</h2>
-                <a href="#form-project" class="bg-rose-600 hover:bg-rose-700 text-white px-6 py-2.5 rounded-full font-semibold shadow-md transition-all text-sm">
-                    <i class="fa-solid fa-plus mr-2"></i>Tambah Project
-                </a>
+                <a href="#form-project" class="bg-rose-600 hover:bg-rose-700 text-white px-6 py-2.5 rounded-full font-semibold shadow-md transition-all text-sm"><i class="fa-solid fa-plus mr-2"></i>Tambah Project</a>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -453,18 +437,37 @@
         </div>
     </section>
 
-    <!-- SECTION: EXPERIENCE (#experience) -->
+    <!-- SECTION: EXPERIENCE (#experience) DENGAN CRUD LENGKAP -->
     <section id="experience" class="py-20 px-6 md:px-20 bg-white dark:bg-gray-950">
         <div class="max-w-4xl mx-auto">
-            <div class="mb-10">
+            <div class="mb-10 flex flex-col md:flex-row justify-between items-center gap-4">
                 <h2 class="text-2xl sm:text-3xl font-bold text-rose-600">Pengalaman & Experience</h2>
+                <a href="#form-experience" class="bg-rose-600 hover:bg-rose-700 text-white px-6 py-2.5 rounded-full font-semibold shadow-md transition-all text-sm">
+                    <i class="fa-solid fa-plus mr-2"></i>Tambah Experience
+                </a>
             </div>
+
             <div class="border-l-2 border-rose-200 dark:border-gray-800 ml-4 space-y-10 pl-6">
                 @forelse($experiences ?? [] as $experience)
-                <div class="relative bg-gray-50/50 dark:bg-gray-900/50 p-6 rounded-2xl border border-rose-100 dark:border-gray-800 shadow-sm">
+                <div class="relative bg-gray-50/50 dark:bg-gray-900/50 p-6 rounded-2xl border border-rose-100 dark:border-gray-800 shadow-sm group">
                     <div class="absolute -left-[37px] top-6 w-4 h-4 bg-rose-600 rounded-full border-4 border-white dark:border-gray-950"></div>
-                    <span class="text-xs font-semibold text-rose-500 uppercase tracking-wider">{{ $experience->period }}</span>
-                    <h3 class="text-base sm:text-lg font-bold mt-1">{{ $experience->title }}</h3>
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+                        <div>
+                            <span class="text-xs font-semibold text-rose-500 uppercase tracking-wider">{{ $experience->period }}</span>
+                            <h3 class="text-base sm:text-lg font-bold mt-1">{{ $experience->title }}</h3>
+                        </div>
+                        <div class="mt-3 sm:mt-0 flex items-center gap-2">
+                            <a href="{{ route('experiences.edit', $experience->id) }}" class="text-amber-500 hover:text-amber-600 text-xs font-semibold px-3 py-1.5 rounded-lg bg-amber-50 dark:bg-gray-800 transition">
+                                <i class="fa-solid fa-pen"></i> Edit
+                            </a>
+                            <form action="{{ route('experiences.destroy', $experience->id) }}" method="POST" onsubmit="return confirm('Hapus experience ini?')">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="text-red-500 hover:text-red-600 text-xs font-semibold px-3 py-1.5 rounded-lg bg-red-50 dark:bg-gray-800 transition">
+                                    <i class="fa-solid fa-trash"></i> Hapus
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                     <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-2">{{ $experience->description }}</p>
                 </div>
                 @empty
@@ -476,7 +479,67 @@
         </div>
     </section>
 
-    <!-- SECTION: KESAN & PESAN (#kesan-pesan) -->
+    <!-- FORM INPUT EXPERIENCE BARU -->
+    <section id="form-experience" class="py-16 px-6 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-xl mx-auto">
+            <div class="text-center mb-10"><h2 class="text-xl sm:text-2xl font-bold mb-2">Form Tambah Experience Baru</h2></div>
+            <div class="bg-white dark:bg-gray-950 rounded-3xl p-6 sm:p-8 border border-rose-100 dark:border-gray-800 shadow-sm">
+                <form action="{{ route('experiences.store') }}" method="POST" class="space-y-5">
+                    @csrf
+                    <div><label class="block text-sm font-semibold mb-2">Judul / Posisi Pengalaman</label><input type="text" name="title" required placeholder="Contoh: Peserta Magang / Developer" class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm"></div>
+                    <div><label class="block text-sm font-semibold mb-2">Periode / Tahun</label><input type="text" name="period" required placeholder="Contoh: Juli - Oktober 2025" class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm"></div>
+                    <div><label class="block text-sm font-semibold mb-2">Deskripsi</label><textarea name="description" rows="3" placeholder="Tuliskan detail pengalaman..." class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm"></textarea></div>
+                    <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-3 rounded-xl transition shadow-md text-sm">Simpan Experience</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION ADMIN: KELOLA CV DIGITAL -->
+<section id="cv" class="py-20 px-6 bg-rose-50/50 dark:bg-gray-900">
+    <div class="max-w-xl mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-3 text-rose-600">Kelola Curriculum Vitae (CV)</h2>
+        <p class="text-gray-500 dark:text-gray-400 mb-8 text-sm">Upload atau perbarui file CV PDF Anda di sini.</p>
+
+        @if(isset($profile) && $profile->cv_file)
+            <!-- Jika CV sudah ada -->
+            <div class="bg-white dark:bg-gray-950 p-6 rounded-3xl shadow-sm border border-rose-100 dark:border-gray-800 mb-6 flex flex-wrap justify-center items-center gap-3">
+                <a href="{{ asset('storage/' . $profile->cv_file) }}" target="_blank" class="inline-flex items-center gap-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 px-5 py-3 rounded-xl font-semibold hover:bg-gray-200 transition text-sm">
+                    <i class="fa-solid fa-file-pdf text-rose-600"></i> Lihat CV Aktif
+                </a>
+                
+                <!-- Tombol Hapus -->
+                <form action="{{ route('profile.cv.destroy') }}" method="POST" onsubmit="return confirm('Hapus file CV ini?')">
+                    @csrf @method('DELETE')
+                    <button type="submit" class="inline-flex items-center gap-2 bg-red-50 hover:bg-red-100 text-red-500 px-5 py-3 rounded-xl font-semibold transition text-sm">
+                        <i class="fa-solid fa-trash"></i> Hapus CV
+                    </button>
+                </form>
+            </div>
+        @else
+            <!-- Jika CV belum ada -->
+            <div class="bg-white dark:bg-gray-950 p-6 rounded-3xl shadow-sm border border-rose-100 dark:border-gray-800 mb-6 text-center">
+                <p class="text-sm text-gray-400 italic">Belum ada file CV yang diunggah.</p>
+            </div>
+        @endif
+
+        <!-- Form Upload / Update CV Sederhana -->
+        <div class="bg-white dark:bg-gray-950 p-6 rounded-3xl shadow-sm border border-rose-100 dark:border-gray-800">
+            <form action="{{ route('profile.cv.update') }}" method="POST" enctype="multipart/form-data" class="space-y-4 text-left">
+                @csrf
+                <div>
+                    <label class="block text-xs font-semibold mb-2 text-gray-600 dark:text-gray-300">Pilih File CV Baru (.pdf)</label>
+                    <input type="file" name="cv_file" accept=".pdf" required class="w-full px-4 py-2 rounded-xl border border-rose-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-sm file:mr-4 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-rose-600 hover:file:bg-rose-100">
+                </div>
+                <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2.5 rounded-xl transition shadow-sm text-sm">
+                    <i class="fa-solid fa-cloud-arrow-up mr-1"></i> Simpan CV
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+    <!-- SECTION: KESAN & PESAN (#kesan-pesan) DENGAN FITUR HAPUS ADMIN -->
     <section id="kesan-pesan" class="py-20 px-6 bg-rose-50/20 dark:bg-gray-900">
         <div class="max-w-xl mx-auto space-y-8">
             <div class="space-y-4">
@@ -486,7 +549,16 @@
                 <div class="bg-white dark:bg-gray-950 p-5 rounded-2xl border border-rose-100 dark:border-gray-800 shadow-sm relative">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-rose-600 text-xs sm:text-sm"><i class="fa-solid fa-user-circle mr-1"></i> {{ $msg->name }}</h4>
-                        <span class="text-[10px] sm:text-xs text-gray-400">{{ $msg->created_at->diffForHumans() }}</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] sm:text-xs text-gray-400">{{ $msg->created_at->diffForHumans() }}</span>
+                            <!-- Tombol Hapus Pesan Khusus Admin -->
+                            <form action="{{ route('messages.destroy', $msg->id) }}" method="POST" onsubmit="return confirm('Hapus pesan ini?')">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="text-red-500 hover:text-red-600 text-xs px-2 py-0.5 rounded bg-red-50 dark:bg-gray-800 transition">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                     <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">{{ $msg->message }}</p>
                 </div>
@@ -502,12 +574,8 @@
                 <h3 class="text-base sm:text-lg font-bold mb-4 text-center">Tuliskan Kesan & Pesan Anda</h3>
                 <form action="{{ route('messages.store') }}" method="POST" class="space-y-4">
                     @csrf
-                    <div>
-                        <input type="text" name="name" required placeholder="Nama Anda" class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-xs sm:text-sm">
-                    </div>
-                    <div>
-                        <textarea name="message" rows="3" required placeholder="Tuliskan kesan dan pesan Anda..." class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-xs sm:text-sm"></textarea>
-                    </div>
+                    <div><input type="text" name="name" required placeholder="Nama Anda" class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-xs sm:text-sm"></div>
+                    <div><textarea name="message" rows="3" required placeholder="Tuliskan kesan dan pesan Anda..." class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-xs sm:text-sm"></textarea></div>
                     <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2.5 rounded-xl text-xs sm:text-sm transition shadow-md">
                         <i class="fa-solid fa-paper-plane mr-1"></i> Kirim Pesan
                     </button>
@@ -521,17 +589,14 @@
         <div class="max-w-4xl mx-auto">
             <h2 class="text-3xl sm:text-4xl font-bold mb-12 tracking-tight">CONTACT</h2>
             <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
-                <!-- Email -->
                 <a href="mailto:fitriyusnida8@gmail.com" class="flex items-center space-x-3 bg-rose-600 text-white px-5 sm:px-7 py-3 rounded-xl hover:-translate-y-1 transition shadow-lg text-sm">
                     <i class="fa-solid fa-envelope text-lg"></i>
                     <span class="font-bold">Email</span>
                 </a>
-                <!-- GitHub -->
                 <a href="https://github.com/fitriyusnida8-gif" target="_blank" class="flex items-center space-x-3 bg-gray-900 dark:bg-gray-800 text-white px-5 sm:px-7 py-3 rounded-xl hover:-translate-y-1 transition shadow-lg border border-gray-700 text-sm">
                     <i class="fa-brands fa-github text-lg"></i>
                     <span class="font-bold">GitHub</span>
                 </a>
-                <!-- Instagram -->
                 <a href="https://instagram.com/fiidaysndaa" target="_blank" class="flex items-center space-x-3 bg-gradient-to-tr from-rose-400 via-pink-500 to-rose-600 text-white px-5 sm:px-7 py-3 rounded-xl hover:-translate-y-1 transition shadow-lg text-sm">
                     <i class="fa-brands fa-instagram text-lg"></i>
                     <span class="font-bold">Instagram</span>
