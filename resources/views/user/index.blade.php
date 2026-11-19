@@ -303,83 +303,110 @@
     </section>
 
     <!-- SECTION: PROJECTS (DENGAN PENCARIAN & FILTER) -->
-    <section id="projects" class="py-20 px-6 bg-rose-50/30 dark:bg-gray-900">
-        <div class="max-w-6xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-                <h2 class="text-3xl font-bold text-rose-600">My Projects</h2>
-            </div>
-            
-            <form method="GET" action="{{ route('user.index') }}#projects" class="mb-10 bg-white dark:bg-gray-950 p-4 rounded-3xl shadow-sm border border-rose-100 dark:border-gray-800 flex flex-col sm:flex-row gap-4 items-center">
-                <div class="relative w-full flex-1">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
-                        <i class="fa-solid fa-search"></i>
-                    </span>
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari judul atau deskripsi project..." class="w-full pl-11 pr-4 py-2.5 rounded-2xl border border-rose-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-sm focus:outline-none focus:border-rose-500">
-                </div>
-
-                <div class="w-full sm:w-64">
-                    <input type="text" name="tech" value="{{ request('tech') }}" placeholder="Filter teknologi (cth: Laravel)" class="w-full px-4 py-2.5 rounded-2xl border border-rose-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-sm focus:outline-none focus:border-rose-500">
-                </div>
-
-                <div class="flex items-center gap-2 w-full sm:w-auto">
-                    <button type="submit" class="flex-1 sm:flex-none bg-rose-600 hover:bg-rose-700 text-white px-5 py-2.5 rounded-2xl font-semibold text-sm transition shadow-sm">
-                        Cari
-                    </button>
-                    @if(request('search') || request('tech'))
-                        <a href="{{ route('user.index') }}#projects" class="flex-1 sm:flex-none bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 text-gray-600 dark:text-gray-300 px-4 py-2.5 rounded-2xl font-semibold text-sm transition text-center">
-                            Reset
-                        </a>
-                    @endif
-                </div>
-            </form>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                @forelse($projects as $project)
-                <div class="bg-white dark:bg-gray-950 rounded-3xl shadow-md overflow-hidden border border-rose-100 dark:border-gray-800 flex flex-col justify-between h-full group">
-                    <div>
-                        <div class="h-52 overflow-hidden bg-rose-50 relative">
-                            @if($project->image)
-                                <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                            @else
-                                <div class="w-full h-full flex flex-col items-center justify-center text-rose-300">
-                                    <i class="fa-solid fa-image text-2xl"></i>
-                                    <span class="text-xs italic">No Image</span>
-                                </div>
-                            @endif
-                        </div>
-                        <div class="p-6 space-y-3">
-                            <h3 class="text-lg font-bold group-hover:text-rose-600 transition">{{ $project->title }}</h3>
-                            <p class="text-gray-500 dark:text-gray-400 text-sm line-clamp-2">{{ $project->description }}</p>
-                            @if($project->technologies)
-                            <div class="flex flex-wrap gap-1.5 pt-1">
-                                @foreach(explode(',', $project->technologies) as $tech)
-                                    <span class="px-2.5 py-0.5 bg-rose-50 dark:bg-gray-800 text-rose-600 dark:text-rose-400 rounded-full text-xs font-medium">{{ trim($tech) }}</span>
-                                @endforeach
-                            </div>
-                            @endif
-                        </div>
-                    </div>
-                    
-                    @if($project->demo_url || $project->github_url)
-                    <div class="px-6 pb-6 pt-2 flex items-center gap-3 border-t border-rose-50 dark:border-gray-800">
-                        @if($project->demo_url)
-                            <a href="{{ $project->demo_url }}" target="_blank" class="flex-1 text-center bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold py-2.5 rounded-xl transition">Demo</a>
-                        @endif
-                        @if($project->github_url)
-                            <a href="{{ $project->github_url }}" target="_blank" class="flex-1 text-center bg-gray-800 hover:bg-gray-900 text-white text-xs font-semibold py-2.5 rounded-xl transition">GitHub</a>
-                        @endif
-                    </div>
-                    @endif
-                </div>
-                @empty
-                <div class="col-span-full text-center py-16 bg-white dark:bg-gray-950 rounded-3xl border-2 border-dashed border-rose-200 dark:border-gray-800 p-8">
-                    <p class="text-gray-400 text-sm italic">Belum ada project yang ditemukan atau ditambahkan.</p>
-                </div>
-                @endforelse
-            </div>
+<section id="projects" class="py-20 px-6 bg-rose-50/30 dark:bg-gray-900">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+            <h2 class="text-3xl font-bold text-rose-600">My Projects</h2>
         </div>
-    </section>
+        
+        <form method="GET" action="{{ route('user.index') }}#projects" class="mb-10 bg-white dark:bg-gray-950 p-4 rounded-3xl shadow-sm border border-rose-100 dark:border-gray-800 flex flex-col sm:flex-row gap-4 items-center">
+            <div class="relative w-full flex-1">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
+                    <i class="fa-solid fa-search"></i>
+                </span>
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari judul atau deskripsi project..." class="w-full pl-11 pr-4 py-2.5 rounded-2xl border border-rose-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-sm focus:outline-none focus:border-rose-500">
+            </div>
 
+            <div class="w-full sm:w-64">
+                <input type="text" name="tech" value="{{ request('tech') }}" placeholder="Filter teknologi (cth: Laravel)" class="w-full px-4 py-2.5 rounded-2xl border border-rose-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-sm focus:outline-none focus:border-rose-500">
+            </div>
+
+            <div class="flex items-center gap-2 w-full sm:w-auto">
+                <button type="submit" class="flex-1 sm:flex-none bg-rose-600 hover:bg-rose-700 text-white px-5 py-2.5 rounded-2xl font-semibold text-sm transition shadow-sm">
+                    Cari
+                </button>
+                @if(request('search') || request('tech'))
+                    <a href="{{ route('user.index') }}#projects" class="flex-1 sm:flex-none bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 text-gray-600 dark:text-gray-300 px-4 py-2.5 rounded-2xl font-semibold text-sm transition text-center">
+                        Reset
+                    </a>
+                @endif
+            </div>
+        </form>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            @forelse($projects as $project)
+            <div class="bg-white dark:bg-gray-950 rounded-3xl shadow-md overflow-hidden border border-rose-100 dark:border-gray-800 flex flex-col justify-between h-full group">
+                <div>
+                    <!-- Gambar Project -->
+                    <div class="h-52 overflow-hidden bg-rose-50 relative">
+                        @if($project->image)
+                            <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        @else
+                            <div class="w-full h-full flex flex-col items-center justify-center text-rose-300">
+                                <i class="fa-solid fa-image text-2xl"></i>
+                                <span class="text-xs italic">No Image</span>
+                            </div>
+                        @endif
+                    </div>
+
+                    <!-- Detail Lengkap Project -->
+                    <div class="p-6 space-y-3">
+                        <h3 class="text-lg font-bold group-hover:text-rose-600 transition">{{ $project->title }}</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">{{ $project->description }}</p>
+                        
+                        <!-- Informasi Detail Tambahan -->
+                        <div class="space-y-1.5 text-xs text-gray-600 dark:text-gray-300 pt-2 border-t border-rose-50 dark:border-gray-800">
+                            @if($project->role)
+                                <p><strong class="text-rose-600 dark:text-rose-400">Peran:</strong> {{ $project->role }}</p>
+                            @endif
+                            @if($project->problem)
+                                <p><strong class="text-rose-600 dark:text-rose-400">Masalah:</strong> {{ $project->problem }}</p>
+                            @endif
+                            @if($project->objective)
+                                <p><strong class="text-rose-600 dark:text-rose-400">Tujuan:</strong> {{ $project->objective }}</p>
+                            @endif
+                            @if($project->features)
+                                <p><strong class="text-rose-600 dark:text-rose-400">Fitur:</strong> {{ $project->features }}</p>
+                            @endif
+                            @if($project->process_docs)
+                                <p><strong class="text-rose-600 dark:text-rose-400">Proses:</strong> {{ $project->process_docs }}</p>
+                            @endif
+                            @if($project->user_feedback)
+                                <p class="italic text-gray-500 dark:text-gray-400 pt-1">"{{ $project->user_feedback }}"</p>
+                            @endif
+                        </div>
+
+                        <!-- Teknologi -->
+                        @if($project->technologies)
+                        <div class="flex flex-wrap gap-1.5 pt-2">
+                            @foreach(explode(',', $project->technologies) as $tech)
+                                <span class="px-2.5 py-0.5 bg-rose-50 dark:bg-gray-800 text-rose-600 dark:text-rose-400 rounded-full text-xs font-medium">{{ trim($tech) }}</span>
+                            @endforeach
+                        </div>
+                        @endif
+                    </div>
+                </div>
+                
+                <!-- Tombol Demo & GitHub -->
+                @if($project->demo_url || $project->github_url)
+                <div class="px-6 pb-6 pt-2 flex items-center gap-3 border-t border-rose-50 dark:border-gray-800">
+                    @if($project->demo_url)
+                        <a href="{{ $project->demo_url }}" target="_blank" class="flex-1 text-center bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold py-2.5 rounded-xl transition">Demo</a>
+                    @endif
+                    @if($project->github_url)
+                        <a href="{{ $project->github_url }}" target="_blank" class="flex-1 text-center bg-gray-800 hover:bg-gray-900 text-white text-xs font-semibold py-2.5 rounded-xl transition">GitHub</a>
+                    @endif
+                </div>
+                @endif
+            </div>
+            @empty
+            <div class="col-span-full text-center py-16 bg-white dark:bg-gray-950 rounded-3xl border-2 border-dashed border-rose-200 dark:border-gray-800 p-8">
+                <p class="text-gray-400 text-sm italic">Belum ada project yang ditemukan atau ditambahkan.</p>
+            </div>
+            @endforelse
+        </div>
+    </div>
+</section>
     <!-- SECTION: PENGALAMAN & EXPERIENCE -->
     <section id="experience" class="py-20 px-6 md:px-20 bg-white dark:bg-gray-950">
         <div class="max-w-4xl mx-auto">
@@ -435,11 +462,11 @@
         </div>
     </section>
 
-    <!-- SECTION: KESAN DAN PESAN -->
+    <!-- SECTION: TESTIMONI -->
     <section id="kesan-pesan" class="py-20 px-6 bg-rose-50/20 dark:bg-gray-900">
         <div class="max-w-xl mx-auto space-y-8">
             <div class="space-y-4">
-                <h2 class="text-2xl font-bold text-center mb-6 text-rose-600">Testi Monial</h2>
+                <h2 class="text-2xl font-bold text-center mb-6 text-rose-600">Testimoni</h2>
                 
                 @forelse($messages ?? [] as $msg)
                 <div class="bg-white dark:bg-gray-950 p-5 rounded-2xl border border-rose-100 dark:border-gray-800 shadow-sm relative">
@@ -457,7 +484,7 @@
             </div>
 
             <div class="bg-white dark:bg-gray-950 p-8 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm">
-                <h3 class="text-lg font-bold mb-4 text-center">Tuliskan Testi Monial Anda</h3>
+                <h3 class="text-lg font-bold mb-4 text-center">Tuliskan Testimoni Anda</h3>
                 
                 <form action="{{ route('messages.store') }}" method="POST" class="space-y-4">
                     @csrf

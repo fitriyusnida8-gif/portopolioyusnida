@@ -26,7 +26,7 @@
             <li><a href="#prestasi" class="hover:text-rose-500 transition">CERTIFICATE</a></li>
             <li><a href="#projects" class="hover:text-rose-500 transition">PROJECTS</a></li>
             <li><a href="#experience" class="hover:text-rose-500 transition">EXPERIENCE</a></li>
-            <li><a href="#kesan-pesan" class="hover:text-rose-500 transition">TESTI MONIAL</a></li>
+            <li><a href="#kesan-pesan" class="hover:text-rose-500 transition">TESTIMONI</a></li>
             <li><a href="#contact" class="hover:text-rose-500 transition">CONTACT</a></li>
 
             <li>
@@ -65,10 +65,10 @@
             <li><a href="#" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">HOME</a></li>
             <li><a href="#about" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">ABOUT</a></li>
             <li><a href="#skills" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">SKILLS</a></li>
-            <li><a href="#prestasi" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">SERTIFIKAT</a></li>
+            <li><a href="#prestasi" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">CERTIFICATE</a></li>
             <li><a href="#projects" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">PROJECTS</a></li>
             <li><a href="#experience" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">EXPERIENCE</a></li>
-            <li><a href="#kesan-pesan" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">KESAN & PESAN</a></li>
+            <li><a href="#kesan-pesan" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">TESTIMONI</a></li>
             <li><a href="#contact" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">CONTACT</a></li>
             <li>
                 <form action="{{ route('logout') }}" method="POST" class="inline">
@@ -478,6 +478,7 @@
             @forelse($projects ?? [] as $project)
             <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-md overflow-hidden border border-rose-100 dark:border-gray-800 flex flex-col justify-between h-full group">
                 <div>
+                    <!-- Gambar Project -->
                     <div class="h-52 overflow-hidden bg-rose-50 relative">
                         @if($project->image)
                             <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
@@ -488,18 +489,51 @@
                             </div>
                         @endif
                     </div>
+
+                    <!-- Konten Detail Project -->
                     <div class="p-6 space-y-3">
                         <h3 class="text-base sm:text-lg font-bold group-hover:text-rose-600 transition">{{ $project->title }}</h3>
                         <p class="text-gray-500 dark:text-gray-400 text-xs sm:text-sm line-clamp-2">{{ $project->description }}</p>
+                        
+                        <!-- Informasi Tambahan: Peran & Tujuan -->
+                        <div class="space-y-1 text-xs text-gray-600 dark:text-gray-300 pt-1 border-t border-rose-50 dark:border-gray-800">
+                            @if($project->role)
+                                <p><strong class="text-rose-600 dark:text-rose-400">Peran:</strong> {{ $project->role }}</p>
+                            @endif
+                            @if($project->objective)
+                                <p><strong class="text-rose-600 dark:text-rose-400">Tujuan:</strong> {{ $project->objective }}</p>
+                            @endif
+                            @if($project->features)
+                                <p><strong class="text-rose-600 dark:text-rose-400">Fitur:</strong> {{ $project->features }}</p>
+                            @endif
+                        </div>
+
+                        <!-- Badge Teknologi -->
                         @if($project->technologies)
-                        <div class="flex flex-wrap gap-1.5 pt-1">
+                        <div class="flex flex-wrap gap-1.5 pt-2">
                             @foreach(explode(',', $project->technologies) as $tech)
                                 <span class="px-2.5 py-0.5 bg-rose-50 dark:bg-gray-800 text-rose-600 dark:text-rose-400 rounded-full text-xs font-medium">{{ trim($tech) }}</span>
                             @endforeach
                         </div>
                         @endif
+
+                        <!-- Tombol Link Demo / GitHub -->
+                        <div class="flex items-center gap-2 pt-2">
+                            @if($project->demo_url)
+                                <a href="{{ $project->demo_url }}" target="_blank" class="text-xs bg-rose-100 hover:bg-rose-200 text-rose-700 px-3 py-1.5 rounded-lg font-semibold transition">
+                                    <i class="fa-solid fa-external-link-alt mr-1"></i> Demo
+                                </a>
+                            @endif
+                            @if($project->github_url)
+                                <a href="{{ $project->github_url }}" target="_blank" class="text-xs bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1.5 rounded-lg font-semibold transition">
+                                    <i class="fa-brands fa-github mr-1"></i> GitHub
+                                </a>
+                            @endif
+                        </div>
                     </div>
                 </div>
+
+                <!-- Tombol Edit & Delete -->
                 <div class="px-6 pb-6 pt-2 flex items-center gap-3 border-t border-rose-50 dark:border-gray-800">
                     <a href="{{ route('projects.edit', $project->id) }}" class="flex-1 text-center bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold py-2.5 rounded-xl transition">Edit</a>
                     <form action="{{ route('projects.destroy', $project->id) }}" method="POST" class="flex-1" onsubmit="return confirm('Hapus project ini?')">
@@ -516,126 +550,6 @@
         </div>
     </div>
 </section>
-<!-- FORM INPUT PROJECT BARU -->
-    <section id="form-project" class="fade-section py-20 px-6 bg-white dark:bg-gray-950">
-        <div class="max-w-3xl mx-auto bg-rose-50/40 dark:bg-gray-900 rounded-3xl p-6 sm:p-10 border border-rose-100 dark:border-gray-800 shadow-xl shadow-rose-100/20">
-            
-            <div class="text-center mb-8">
-                <h2 class="text-2xl sm:text-3xl font-bold mb-2 text-rose-600">Form Tambah Project Baru</h2>
-                <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Masukkan portofolio atau project UKK baru dengan informasi lengkap di sini.</p>
-            </div>
-
-            <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
-                @csrf
-
-                <!-- 1. Judul Proyek -->
-                <div>
-                    <label for="judul" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Judul / Nama Proyek</label>
-                    <input type="text" name="title" id="judul" required
-                        class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 text-sm" 
-                        placeholder="Contoh: Website E-Commerce UKK PPLG">
-                </div>
-
-                <!-- 2. Gambar / Screenshot Aplikasi -->
-                <div>
-                    <label for="gambar" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Upload Gambar Screenshot Project</label>
-                    <input type="file" name="image" id="gambar" accept="image/*"
-                        class="w-full px-4 py-2 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-sm file:mr-4 file:py-1.5 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-rose-100 file:text-rose-700 hover:file:bg-rose-200">
-                </div>
-
-                <!-- 3. Deskripsi Proyek -->
-                <div>
-                    <label for="deskripsi" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Deskripsi Proyek</label>
-                    <textarea name="description" id="deskripsi" rows="3" required
-                        class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 text-sm" 
-                        placeholder="Tuliskan deskripsi singkat mengenai fitur dan fungsi project..."></textarea>
-                </div>
-
-                <!-- 4. Permasalahan yang ingin diselesaikan -->
-                <div>
-                    <label for="problem" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Permasalahan yang Ingin Diselesaikan</label>
-                    <input type="text" name="problem" id="problem"
-                        class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 text-sm" 
-                        placeholder="Contoh: Proses manual yang lambat dan sering tercecer...">
-                </div>
-
-                <!-- 5. Tujuan dibuatnya proyek -->
-                <div>
-                    <label for="objective" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Tujuan Proyek</label>
-                    <input type="text" name="objective" id="objective"
-                        class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 text-sm" 
-                        placeholder="Contoh: Membangun sistem digital yang cepat dan efisien...">
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- 6. Teknologi yang digunakan -->
-                    <div>
-                        <label for="technologies" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Teknologi yang Digunakan</label>
-                        <input type="text" name="technologies" id="technologies" required
-                            class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 text-sm" 
-                            placeholder="Laravel, Tailwind CSS, MySQL...">
-                    </div>
-
-                    <!-- 7. Peran dalam proyek -->
-                    <div>
-                        <label for="role" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Peran dalam Proyek</label>
-                        <input type="text" name="role" id="role"
-                            class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 text-sm" 
-                            placeholder="UI/UX Designer & Frontend...">
-                    </div>
-                </div>
-
-                <!-- 8. Fitur-Fitur dalam proyek -->
-                <div>
-                    <label for="features" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Fitur-Fitur Proyek</label>
-                    <textarea name="features" id="features" rows="2"
-                        class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 text-sm" 
-                        placeholder="Sebutkan fitur utama, pisahkan dengan koma..."></textarea>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- 9. Link Demo proyek -->
-                    <div>
-                        <label for="demo_url" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Link Demo Proyek</label>
-                        <input type="url" name="demo_url" id="demo_url"
-                            class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 text-sm" 
-                            placeholder="https://figma.com/...">
-                    </div>
-
-                    <!-- 10. Link Source Code GitHub -->
-                    <div>
-                        <label for="github_url" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Link Source Code GitHub</label>
-                        <input type="url" name="github_url" id="github_url"
-                            class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 text-sm" 
-                            placeholder="https://github.com/...">
-                    </div>
-                </div>
-
-                <!-- 11. Dokumentasi Proses Pekerjaan -->
-                <div>
-                    <label for="process_docs" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Dokumentasi Proses Pekerjaan</label>
-                    <input type="text" name="process_docs" id="process_docs"
-                        class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 text-sm" 
-                        placeholder="Contoh: Riset -> Wireframe -> High-Fi Design -> Testing...">
-                </div>
-
-                <!-- 12. Feedback User -->
-                <div>
-                    <label for="user_feedback" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Feedback User</label>
-                    <input type="text" name="user_feedback" id="user_feedback"
-                        class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 text-sm" 
-                        placeholder="Contoh: Desain sangat bersih dan mudah dipahami...">
-                </div>
-
-                <!-- Tombol Aksi -->
-                <div class="pt-4">
-                    <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-3 rounded-xl transition shadow-md shadow-rose-100 text-sm flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-cloud-arrow-up"></i> Simpan Project Baru
-                    </button>
-                </div>
-            </form>
-        </div>
-    </section>
 
     
 <!-- SECTION: EXPERIENCE (#experience) DENGAN UPLOAD GAMBAR -->
@@ -767,7 +681,7 @@
     <section id="kesan-pesan" class="py-20 px-6 bg-rose-50/20 dark:bg-gray-900">
         <div class="max-w-xl mx-auto space-y-8">
             <div class="space-y-4">
-                <h2 class="text-xl sm:text-2xl font-bold text-center mb-6 text-rose-600">Testi Monial</h2>
+                <h2 class="text-xl sm:text-2xl font-bold text-center mb-6 text-rose-600">Testimoni</h2>
                 
                 @forelse($messages ?? [] as $msg)
                 <div class="bg-white dark:bg-gray-950 p-5 rounded-2xl border border-rose-100 dark:border-gray-800 shadow-sm relative">
@@ -795,7 +709,7 @@
 
             <!-- FORMULIR INPUT KESAN & PESAN -->
             <div class="bg-white dark:bg-gray-950 p-6 sm:p-8 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm">
-                <h3 class="text-base sm:text-lg font-bold mb-4 text-center">Tuliskan Testi Monial Anda</h3>
+                <h3 class="text-base sm:text-lg font-bold mb-4 text-center">Tuliskan Testimoni Anda</h3>
                 <form action="{{ route('messages.store') }}" method="POST" class="space-y-4">
                     @csrf
                     <div><input type="text" name="name" required placeholder="Nama Anda" class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-xs sm:text-sm"></div>
@@ -839,7 +753,7 @@
 
     <!-- FOOTER -->
     <footer class="bg-rose-950 dark:bg-gray-950 text-white px-6 md:px-20 py-8 text-center w-full">
-        <p class="text-rose-200/60 text-xs sm:text-sm tracking-widest uppercase">© 2026 Fitri Yusnida - UKK PPLG</p>
+        <p class="text-rose-200/60 text-xs sm:text-sm tracking-widest uppercase">© 2026 Fitri Yusnida</p>
     </footer>
 
     <!-- SCRIPT INTERAKTIF (DARK MODE & MOBILE MENU) -->
