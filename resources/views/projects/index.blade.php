@@ -23,10 +23,10 @@
             <li><a href="#" class="hover:text-rose-500 transition">HOME</a></li>
             <li><a href="#about" class="hover:text-rose-500 transition">ABOUT</a></li>
             <li><a href="#skills" class="hover:text-rose-500 transition">SKILLS</a></li>
-            <li><a href="#prestasi" class="hover:text-rose-500 transition">SERTIFIKAT</a></li>
+            <li><a href="#prestasi" class="hover:text-rose-500 transition">CERTIFICATE</a></li>
             <li><a href="#projects" class="hover:text-rose-500 transition">PROJECTS</a></li>
             <li><a href="#experience" class="hover:text-rose-500 transition">EXPERIENCE</a></li>
-            <li><a href="#kesan-pesan" class="hover:text-rose-500 transition">KESAN & PESAN</a></li>
+            <li><a href="#kesan-pesan" class="hover:text-rose-500 transition">TESTI MONIAL</a></li>
             <li><a href="#contact" class="hover:text-rose-500 transition">CONTACT</a></li>
 
             <li>
@@ -722,14 +722,14 @@
     <!-- SECTION ADMIN: KELOLA CV DIGITAL -->
 <section id="cv" class="py-20 px-6 bg-rose-50/50 dark:bg-gray-900">
     <div class="max-w-xl mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-3 text-rose-600">Kelola Curriculum Vitae (CV)</h2>
+        <h2 class="text-3xl font-bold mb-3 text-rose-600">CV</h2>
         <p class="text-gray-500 dark:text-gray-400 mb-8 text-sm">Upload atau perbarui file CV PDF Anda di sini.</p>
 
         @if(isset($profile) && $profile->cv_file)
             <!-- Jika CV sudah ada -->
             <div class="bg-white dark:bg-gray-950 p-6 rounded-3xl shadow-sm border border-rose-100 dark:border-gray-800 mb-6 flex flex-wrap justify-center items-center gap-3">
                 <a href="{{ asset('storage/' . $profile->cv_file) }}" target="_blank" class="inline-flex items-center gap-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 px-5 py-3 rounded-xl font-semibold hover:bg-gray-200 transition text-sm">
-                    <i class="fa-solid fa-file-pdf text-rose-600"></i> Lihat CV Aktif
+                    <i class="fa-solid fa-file-pdf text-rose-600"></i> View CV Aktif
                 </a>
                 
                 <!-- Tombol Hapus -->
@@ -767,7 +767,7 @@
     <section id="kesan-pesan" class="py-20 px-6 bg-rose-50/20 dark:bg-gray-900">
         <div class="max-w-xl mx-auto space-y-8">
             <div class="space-y-4">
-                <h2 class="text-xl sm:text-2xl font-bold text-center mb-6 text-rose-600">Kesan & Pesan Pengunjung</h2>
+                <h2 class="text-xl sm:text-2xl font-bold text-center mb-6 text-rose-600">Testi Monial</h2>
                 
                 @forelse($messages ?? [] as $msg)
                 <div class="bg-white dark:bg-gray-950 p-5 rounded-2xl border border-rose-100 dark:border-gray-800 shadow-sm relative">
@@ -795,7 +795,7 @@
 
             <!-- FORMULIR INPUT KESAN & PESAN -->
             <div class="bg-white dark:bg-gray-950 p-6 sm:p-8 rounded-3xl border border-rose-100 dark:border-gray-800 shadow-sm">
-                <h3 class="text-base sm:text-lg font-bold mb-4 text-center">Tuliskan Kesan & Pesan Anda</h3>
+                <h3 class="text-base sm:text-lg font-bold mb-4 text-center">Tuliskan Testi Monial Anda</h3>
                 <form action="{{ route('messages.store') }}" method="POST" class="space-y-4">
                     @csrf
                     <div><input type="text" name="name" required placeholder="Nama Anda" class="w-full px-4 py-2.5 rounded-xl border border-rose-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-xs sm:text-sm"></div>
