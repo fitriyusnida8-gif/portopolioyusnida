@@ -34,7 +34,7 @@
             <li><a href="#prestasi" class="hover:text-rose-500 transition">CERTIFICATE</a></li>
             <li><a href="#projects" class="hover:text-rose-500 transition">PROJECTS</a></li>
             <li><a href="#experience" class="hover:text-rose-500 transition">EXPERIENCE</a></li>
-            <li><a href="#kesan-pesan" class="hover:text-rose-500 transition">TESTI MONIAL</a></li>
+            <li><a href="#kesan-pesan" class="hover:text-rose-500 transition">TESTIMONI</a></li>
             <li><a href="#contact" class="hover:text-rose-500 transition">CONTACT</a></li>
 
             <li>
@@ -70,10 +70,10 @@
             <li><a href="#" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">HOME</a></li>
             <li><a href="#about" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">ABOUT</a></li>
             <li><a href="#skills" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">SKILLS</a></li>
-            <li><a href="#prestasi" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">SERTIFIKAT</a></li>
+            <li><a href="#prestasi" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">CERTIFICATE</a></li>
             <li><a href="#projects" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">PROJECTS</a></li>
             <li><a href="#experience" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">EXPERIENCE</a></li>
-            <li><a href="#kesan-pesan" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">KESAN & PESAN</a></li>
+            <li><a href="#kesan-pesan" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">TESTIMONI</a></li>
             <li><a href="#contact" onclick="toggleMobileMenu()" class="block hover:text-rose-500 transition">CONTACT</a></li>
             <li>
                 <a href="{{ route('login') }}" class="block text-center px-5 py-2.5 bg-rose-600 text-white rounded-xl transition text-sm shadow-md">
